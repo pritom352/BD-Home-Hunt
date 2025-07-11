@@ -1,12 +1,86 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import Swal from "sweetalert2";
 // import { AiFillEye, AiFillEyeInvisible, FaGoogle } from "react-icons/ai";
 
 const Register = () => {
-  const data = useContext(AuthContext);
-  console.log(data);
+  const { register, updateUser, googleLogin, setUser } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.currentPassword.value;
+    const photo = e.target.photoURL.value;
+    const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if (passwordRegExp.test(password) === false) {
+      alert(
+        "Password must be at least Six characters includeing  one upper and lower case."
+      );
+      return;
+    }
+    register(email, password)
+      .then((result) => {
+        const users = result.user;
+        // console.log(users);
+        updateUser({ displayName: name, photoURL: photo })
+          .then(() => {
+            setUser({ ...users, displayName: name, photoURL: photo });
+          })
+          .catch((error) => {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `${error.message}`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
 
+        navigate("/");
+
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Register successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: `${error.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: `${error.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
   return (
     <div className="min-h-screen flex items-center">
       {/* Left Side */}
@@ -92,7 +166,7 @@ const Register = () => {
           Register <span className=" text-black ">Now</span>
         </h2>
         <div className="card-body">
-          <form className="fieldset">
+          <form onSubmit={handleRegister} className="fieldset">
             {/* Name */}
             <label className="label">Name</label>
             <input
@@ -174,7 +248,7 @@ const Register = () => {
             </button>
           </form>
           <button
-            // onClick={handleGoogleLogin}
+            onClick={handleGoogleLogin}
             className=" btn   gap-3 rounded-md  bg-black text-white  font-semibold py-2.5 hover:bg-blue-400 hover:border-none hover:font-bold "
           >
             Login With Google Login

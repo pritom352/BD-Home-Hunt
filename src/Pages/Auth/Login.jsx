@@ -1,9 +1,61 @@
-import { Link } from "react-router";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { login, googleLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    // console.log(email, password);
+    login(email, password)
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: `${error.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: `${error.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -25,11 +77,12 @@ const Login = () => {
           <h2 className="text-2xl font-bold text-center mb-6">
             Login to your account
           </h2>
-          <form className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block mb-1 font-medium">Email</label>
               <input
                 type="email"
+                name="email"
                 placeholder="Enter your email"
                 className="w-full px-4 py-2 border rounded"
                 required
@@ -44,6 +97,7 @@ const Login = () => {
                   placeholder="Enter your password"
                   className="w-full px-4 py-2 border rounded pr-10"
                   required
+                  name="password"
                 />
                 <span
                   onClick={() => setShowPassword(!showPassword)}
@@ -72,7 +126,10 @@ const Login = () => {
           {/* Optional: Social Login */}
           <div className="mt-6 text-center">
             <p>or login with</p>
-            <button className="mt-2 bg-red-500 text-white px-4 py-2 rounded">
+            <button
+              onClick={handleGoogleLogin}
+              className="mt-2 bg-red-500 text-white px-4 py-2 rounded"
+            >
               Google
             </button>
           </div>
