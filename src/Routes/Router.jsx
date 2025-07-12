@@ -5,6 +5,7 @@ import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import AddProperty from "../Pages/AddProperty/AddProperty";
 import DashboardLayout from "../Layouts/DashboardLayout";
+import PropertyDetails from "../Pages/PropertyDetails/PropertyDetails";
 
 const router = createBrowserRouter([
   {
@@ -15,16 +16,16 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-        loader: fetch("http://localhost:3000/property"),
+        loader: () => fetch("http://localhost:3000/property"),
       },
       //   {
       //     path: "all-properties",
       //     element: <AllProperties />,
       //   },
-      //   {
-      //     path: "property/:id",
-      //     element: <PropertyDetails />,
-      //   },
+      {
+        path: "property/:id",
+        element: <PropertyDetails />,
+      },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
       {
