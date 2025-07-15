@@ -36,10 +36,17 @@ const DashboardLayout = () => {
               <FaHome /> Become a Seller
             </Link>
             <Link
-              to="add-product"
+              to={"/dashboard/addProperty"}
               className={linkClasses("/dashboard/add-product")}
             >
               <FaPlus /> Add Product
+            </Link>
+            {/* my Profile */}
+            <Link
+              to={"/dashboard/myProfile"}
+              className={linkClasses("/dashboard/add-product")}
+            >
+              <FaUser /> My Profile
             </Link>
             <Link
               to="inventory"

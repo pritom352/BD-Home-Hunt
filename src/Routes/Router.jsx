@@ -3,9 +3,11 @@ import Home from "../Pages/Home/Home";
 import MainLayout from "../Layouts/MainLayout";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
-import AddProperty from "../Pages/AddProperty/AddProperty";
+// import AddProperty from "../Pages/AddProperty/AddProperty";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import PropertyDetails from "../Pages/PropertyDetails/PropertyDetails";
+import AddProperty from "../Pages/AddProperty/AddProperty";
+import MyProfile from "../Pages/MyProfile/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -28,10 +30,6 @@ const router = createBrowserRouter([
       },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
-      {
-        path: "addProperty",
-        element: <AddProperty></AddProperty>,
-      },
     ],
   },
   {
@@ -39,6 +37,14 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     // errorElement: <NotFound />,
     children: [
+      {
+        path: "addProperty",
+        element: <AddProperty></AddProperty>,
+      },
+      {
+        path: "myProfile",
+        element: <MyProfile></MyProfile>,
+      },
       // USER ROUTES
       // { path: "user/profile", element: <MyProfile /> },
       // { path: "user/wishlist", element: <Wishlist /> },

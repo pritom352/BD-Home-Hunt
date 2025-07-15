@@ -1,39 +1,93 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router";
+import { AuthContext } from "../../context/AuthContext";
 
 const PropertyDetails = () => {
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [wishlistMsg, setWishlistMsg] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [reviewText, setReviewText] = useState("");
 
   useEffect(() => {
     fetch(`http://localhost:3000/property/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProperty(data);
-        setSelectedImage(data?.images?.[0] || data?.image); // default main image
+        setSelectedImage(data?.images?.[0] || data?.image);
+        setReviews(data?.reviews || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, [id]);
+  console.log(user);
 
-  const handleAddToWishlist = () => {};
+  const handleAddToWishlist = () => {
+    fetch(`http://localhost:3000/wishlist`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ propertyId: id, userEmail: user?.email }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          setWishlistMsg("✅ Added to Wishlist!");
+        } else {
+          setWishlistMsg("❌ Failed to add to Wishlist.");
+        }
+      })
+      .catch(() => setWishlistMsg("⚠️ Something went wrong."));
+  };
+
+  const handleSubmitReview = async () => {
+    if (!reviewText.trim()) return;
+
+    const review = {
+      propertyId: id,
+      userEmail: user?.email || "anonymous@example.com",
+      userName: user?.displayName || "Anonymous",
+      comment: reviewText,
+    };
+
+    try {
+      const res = await fetch(`http://localhost:3000/reviews`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(review),
+      });
+
+      if (res.ok) {
+        setReviews([
+          ...reviews,
+          {
+            userName: review.userName,
+            comment: review.comment,
+          },
+        ]);
+        setReviewText("");
+        setShowModal(false);
+      } else {
+        console.error("Failed to submit review");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (loading) return <p className="text-center mt-8">Loading...</p>;
   if (!property) return <p className="text-center mt-8">Property not found</p>;
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
-      {/* Page Header */}
       <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
         🏡 Property Details
       </h1>
 
       {/* Main Section */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row gap-6">
-        {/* Big Image + Thumbnails */}
         <div className="md:w-2/3 overflow-hidden">
           <img
             src={selectedImage}
@@ -41,7 +95,6 @@ const PropertyDetails = () => {
             className="w-full h-[500px] object-cover hover:scale-105 transition-transform duration-500 rounded"
           />
 
-          {/* Thumbnails */}
           <div className="flex gap-2 mt-4 flex-wrap">
             {property.images?.map((img, i) => (
               <img
@@ -57,24 +110,20 @@ const PropertyDetails = () => {
           </div>
         </div>
 
-        {/* Property Info */}
         <div className="md:w-1/3 p-6 flex flex-col justify-between space-y-4">
           <div>
             <h2 className="text-3xl font-semibold text-gray-800">
               {property.title}
             </h2>
 
-            {/* Description */}
             <p className="text-gray-600 mt-2 text-justify">
               {property.description}
             </p>
 
-            {/* Location */}
             <p className="text-gray-500 mt-2">
               📍 <span className="font-medium">{property.location}</span>
             </p>
 
-            {/* Price Range */}
             <div className="mt-4 flex flex-wrap gap-4">
               <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-lg font-semibold">
                 💲 {property.priceRange}
@@ -96,12 +145,10 @@ const PropertyDetails = () => {
         </div>
       </div>
 
-      {/* Agent Info Section Title */}
       <h2 className="text-2xl font-semibold text-gray-700 mt-10">
         👨‍💼 Agent Information
       </h2>
 
-      {/* Agent Info */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden p-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <img
@@ -127,6 +174,59 @@ const PropertyDetails = () => {
           </button>
         </div>
       </div>
+
+      {/* Reviews */}
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden p-6 mt-6 space-y-4">
+        <h3 className="text-2xl font-semibold">📋 Reviews</h3>
+
+        {reviews.length > 0 ? (
+          reviews.map((review, idx) => (
+            <div key={idx} className="border-b py-2">
+              <p className="font-medium">{review.userName}:</p>
+              <p className="text-gray-600">{review.comment}</p>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500">No reviews yet.</p>
+        )}
+
+        <button
+          onClick={() => setShowModal(true)}
+          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          ➕ Add a Review
+        </button>
+      </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h3 className="text-xl font-bold mb-4">Add Your Review</h3>
+            <textarea
+              rows="4"
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+              className="w-full border p-2 rounded mb-4"
+              placeholder="Write your review here..."
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmitReview}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
