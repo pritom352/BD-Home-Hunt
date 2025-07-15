@@ -49,6 +49,12 @@ const DashboardLayout = () => {
               <FaUser /> My Profile
             </Link>
             <Link
+              to={"/dashboard/wishList"}
+              className={linkClasses("/dashboard/add-product")}
+            >
+              Wish List
+            </Link>
+            <Link
               to="inventory"
               className={linkClasses("/dashboard/inventory")}
             >

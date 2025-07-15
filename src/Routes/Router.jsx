@@ -8,6 +8,8 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import PropertyDetails from "../Pages/PropertyDetails/PropertyDetails";
 import AddProperty from "../Pages/AddProperty/AddProperty";
 import MyProfile from "../Pages/MyProfile/MyProfile";
+import WishlistPage from "../Pages/WishlistPage/WishlistPage";
+import MakeOfferPage from "../Pages/MakeOfferPage/MakeOfferPage";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +46,14 @@ const router = createBrowserRouter([
       {
         path: "myProfile",
         element: <MyProfile></MyProfile>,
+      },
+      {
+        path: "wishList",
+        element: <WishlistPage></WishlistPage>,
+      },
+      {
+        path: "/dashboard/makeOffer/:id",
+        element: <MakeOfferPage></MakeOfferPage>,
       },
       // USER ROUTES
       // { path: "user/profile", element: <MyProfile /> },

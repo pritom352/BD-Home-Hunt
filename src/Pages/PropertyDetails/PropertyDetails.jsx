@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
 
 const PropertyDetails = () => {
   const { user } = useContext(AuthContext);
@@ -26,20 +27,24 @@ const PropertyDetails = () => {
   }, [id]);
   console.log(user);
 
-  const handleAddToWishlist = () => {
-    fetch(`http://localhost:3000/wishlist`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ propertyId: id, userEmail: user?.email }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          setWishlistMsg("✅ Added to Wishlist!");
-        } else {
-          setWishlistMsg("❌ Failed to add to Wishlist.");
-        }
-      })
-      .catch(() => setWishlistMsg("⚠️ Something went wrong."));
+  const handleAddToWishlist = async () => {
+    try {
+      const res = await axios.post("http://localhost:3000/wishlist", {
+        propertyId: id,
+        userEmail: user?.email,
+      });
+      if (res.status === 201) {
+        setWishlistMsg("✅ Added to Wishlist!");
+      } else {
+        setWishlistMsg("❌ Failed to add to Wishlist.");
+      }
+    } catch (err) {
+      if (err.response?.status === 409) {
+        setWishlistMsg("⚠️ Already in Wishlist.");
+      } else {
+        setWishlistMsg("⚠️ Something went wrong.");
+      }
+    }
   };
 
   const handleSubmitReview = async () => {
