@@ -25,7 +25,7 @@ const PropertyDetails = () => {
       })
       .catch(() => setLoading(false));
   }, [id]);
-  console.log(user);
+  console.log("okkkkkkkkkkkkkkkkk", property);
 
   const handleAddToWishlist = async () => {
     try {
@@ -52,9 +52,10 @@ const PropertyDetails = () => {
 
     const review = {
       propertyId: id,
-      userEmail: user?.email || "anonymous@example.com",
-      userName: user?.displayName || "Anonymous",
+      userEmail: user?.email,
+      userName: user?.displayName,
       comment: reviewText,
+      agentName: property.agentName,
     };
 
     try {
