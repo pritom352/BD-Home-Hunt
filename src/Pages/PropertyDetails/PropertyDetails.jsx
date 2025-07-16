@@ -20,12 +20,12 @@ const PropertyDetails = () => {
       .then((data) => {
         setProperty(data);
         setSelectedImage(data?.images?.[0] || data?.image);
-        setReviews(data?.reviews || []);
+        // setReviews(data?.reviews || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, [id]);
-  console.log("okkkkkkkkkkkkkkkkk", property);
+  console.log("okkkkkkkkkkkkkkkkk", user);
 
   const handleAddToWishlist = async () => {
     try {
@@ -46,14 +46,15 @@ const PropertyDetails = () => {
       }
     }
   };
-
   const handleSubmitReview = async () => {
     if (!reviewText.trim()) return;
 
     const review = {
       propertyId: id,
+      propertyTitle: property?.title,
       userEmail: user?.email,
       userName: user?.displayName,
+      userImage: user?.photoURL,
       comment: reviewText,
       agentName: property.agentName,
     };
