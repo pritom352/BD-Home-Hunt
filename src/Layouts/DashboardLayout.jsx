@@ -56,6 +56,7 @@ const DashboardLayout = () => {
             </Link>
             <Link to={"/dashboard/myReviews"}>My Reviews</Link>
             <Link to={"/dashboard/my-properties"}>My Properties</Link>
+            <Link to={"/dashboard/manage-properties"}>manage-properties</Link>
             <Link
               to="inventory"
               className={linkClasses("/dashboard/inventory")}

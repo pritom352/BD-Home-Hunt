@@ -38,6 +38,21 @@ const PropertyCard = ({ property }) => {
           animate={inView ? { x: "100%" } : {}}
           transition={{ duration: 0.6, ease: "easeInOut" }}
         ></motion.div>
+
+        {/* Verification badge */}
+        <div className="absolute top-2 right-2">
+          <span
+            className={`px-2 py-1 text-xs font-medium rounded ${
+              property.verificationStatus === "verified"
+                ? "bg-green-100 text-green-700"
+                : property.verificationStatus === "rejected"
+                ? "bg-red-100 text-red-700"
+                : "bg-yellow-100 text-yellow-700"
+            }`}
+          >
+            {property.verificationStatus || "Pending"}
+          </span>
+        </div>
       </div>
 
       {/* Card Content */}

@@ -13,6 +13,7 @@ import MakeOfferPage from "../Pages/MakeOfferPage/MakeOfferPage";
 import MyReviews from "../Pages/MyReviews/MyReviews";
 import AllProperties from "../Pages/Allproperties/Allproperties";
 import MyAddedProperties from "../Pages/MyAddedProperties/MyAddedProperties";
+import ManageProperties from "../Pages/ManageProperties/ManageProperties";
 
 const router = createBrowserRouter([
   {
@@ -75,7 +76,7 @@ const router = createBrowserRouter([
       // { path: "agent/requests", element: <RequestedProperties /> },
       // ADMIN ROUTES
       // { path: "admin/profile", element: <AdminProfile /> },
-      // { path: "admin/manage-properties", element: <ManageProperties /> },
+      { path: "manage-properties", element: <ManageProperties /> },
       // { path: "admin/manage-users", element: <ManageUsers /> },
       // { path: "admin/manage-reviews", element: <ManageReviews /> },
       // { path: "admin/advertise", element: <AdvertiseProperty /> },
