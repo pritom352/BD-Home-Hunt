@@ -11,6 +11,8 @@ import MyProfile from "../Pages/MyProfile/MyProfile";
 import WishlistPage from "../Pages/WishlistPage/WishlistPage";
 import MakeOfferPage from "../Pages/MakeOfferPage/MakeOfferPage";
 import MyReviews from "../Pages/MyReviews/MyReviews";
+import AllProperties from "../Pages/Allproperties/Allproperties";
+import MyAddedProperties from "../Pages/MyAddedProperties/MyAddedProperties";
 
 const router = createBrowserRouter([
   {
@@ -23,10 +25,10 @@ const router = createBrowserRouter([
         element: <Home />,
         loader: () => fetch("http://localhost:3000/property"),
       },
-      //   {
-      //     path: "all-properties",
-      //     element: <AllProperties />,
-      //   },
+      {
+        path: "allPropertie",
+        element: <AllProperties />,
+      },
       {
         path: "property/:id",
         element: <PropertyDetails />,
@@ -68,7 +70,7 @@ const router = createBrowserRouter([
       // AGENT ROUTES
       // { path: "agent/profile", element: <AgentProfile /> },
       // { path: "agent/add-property", element: <AddProperty /> },
-      // { path: "agent/my-properties", element: <MyAddedProperties /> },
+      { path: "my-properties", element: <MyAddedProperties /> },
       // { path: "agent/sold-properties", element: <MySoldProperties /> },
       // { path: "agent/requests", element: <RequestedProperties /> },
       // ADMIN ROUTES
