@@ -33,8 +33,11 @@ const DashboardLayout = () => {
 
           <nav className="flex flex-col gap-2">
             {role === "customer" && (
-              <Link to="orders" className={linkClasses("/dashboard/orders")}>
-                <FaClipboardList /> My Orders
+              <Link
+                to={"/dashboard/agentOffers"}
+                // className={linkClasses("/dashboard/agentOffers")}
+              >
+                <FaClipboardList /> AgentOffers
               </Link>
             )}
             {role === "agent" && (

@@ -18,6 +18,7 @@ import PrivateRoute from "./PrivateRoute";
 import UpdateProperty from "../Pages/UpdateProperty/UpdateProperty";
 import ManageUsers from "../Pages/ManageUsers/ManageUsers";
 import ManageReviews from "../Pages/ManageReviews/ManageReviews";
+import AgentOffers from "../Pages/AgentOffers/AgentOffers";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,11 @@ const router = createBrowserRouter([
         path: "/dashboard/manageUsers",
         element: <ManageUsers></ManageUsers>,
       },
+      {
+        path: "/dashboard/agentOffers",
+        element: <AgentOffers></AgentOffers>,
+      },
+
       {
         path: "/dashboard/mahageReviews",
         element: <ManageReviews></ManageReviews>,

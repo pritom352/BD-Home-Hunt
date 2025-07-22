@@ -30,6 +30,7 @@ const MakeOfferPage = () => {
       setErrorMsg("Please fill all the fields.");
       return;
     }
+    console.log(property.agentEmail);
 
     try {
       const res = await axios.post(`http://localhost:3000/offers`, {
@@ -38,6 +39,7 @@ const MakeOfferPage = () => {
         buyerEmail: user?.email,
         buyerName: user?.displayName,
         buyingDate,
+        agentEmail: property?.agentEmail,
       });
 
       if (res.status === 201) {
