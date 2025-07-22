@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -8,17 +8,18 @@ const PropertyCard = ({ property }) => {
   const controls = useAnimation();
   const [ref, inView] = useInView({ triggerOnce: true });
 
-  if (inView) {
-    controls.start("visible");
-  }
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [inView, controls]);
 
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       {/* Image Section */}
       <div ref={ref} className="overflow-hidden relative group">
-        {/* Image */}
         <motion.img
-          src={property.image}
+          src={property.images[0]}
           alt={property.title}
           className="object-cover w-full h-48 transform transition-transform duration-500 group-hover:scale-110"
           initial={{ filter: "blur(8px)" }}
@@ -56,20 +57,42 @@ const PropertyCard = ({ property }) => {
       </div>
 
       {/* Card Content */}
-      <div className="p-4 space-y-3">
-        <p className="text-2xl font-bold text-green-600">${property.price}</p>
-        <h2 className="text-3xl font-semibold text-gray-800">
+      <div className="p-4 space-y-1">
+        {/* Price Range */}
+        <motion.p
+          className="text-2xl font-bold text-green-600"
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          {property.priceRange}
+        </motion.p>
+
+        {/* Title */}
+        <motion.h2
+          className="text-xl font-semibold text-gray-800"
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
+        >
           {property.title}
-        </h2>
+        </motion.h2>
 
         {/* Location */}
-        <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
+        <motion.p
+          className="text-sm text-gray-500 flex items-center gap-1"
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 300, delay: 0.15 }}
+        >
           <FaMapMarkerAlt className="text-red-500" />
           {property.location}
-        </p>
+        </motion.p>
+      </div>
 
-        <div className="border-t my-4"></div>
-
+      <div className="px-4 pb-4">
         <Link to={`property/${property._id}`}>
           <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
             View Details

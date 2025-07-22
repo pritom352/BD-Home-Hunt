@@ -107,7 +107,7 @@ const MyAddedProperties = () => {
             <div className="flex gap-2 mt-2">
               {property.verificationStatus !== "rejected" && (
                 <Link
-                  to={`/update-property/${property._id}`}
+                  to={`/dashboard/update-property/${property._id}`}
                   className="flex-1 bg-blue-600 text-white px-3 py-1 rounded text-center hover:bg-blue-700"
                 >
                   Update

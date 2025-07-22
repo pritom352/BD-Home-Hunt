@@ -1,31 +1,49 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const PropertyDetails = () => {
   const { user } = useContext(AuthContext);
   const { id } = useParams();
-  const [property, setProperty] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [wishlistMsg, setWishlistMsg] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [reviews, setReviews] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [reviewText, setReviewText] = useState("");
 
+  const {
+    data: property,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["property", id],
+    queryFn: async () => {
+      const { data } = await axios(`http://localhost:3000/property/${id}`);
+      setSelectedImage(data.image || data.images?.[0]);
+      return data;
+    },
+  });
+
+  // ফেচ করবো সব রিভিউ (userEmail ছাড়াই)
   useEffect(() => {
-    fetch(`http://localhost:3000/property/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProperty(data);
-        setSelectedImage(data?.images?.[0] || data?.image);
-        // setReviews(data?.reviews || []);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [id]);
-  console.log("okkkkkkkkkkkkkkkkk", user);
+    const fetchReviews = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/reviews`);
+        if (res.ok) {
+          const data = await res.json();
+          setReviews(data);
+        } else {
+          console.error("Failed to fetch reviews");
+        }
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   const handleAddToWishlist = async () => {
     try {
@@ -46,6 +64,7 @@ const PropertyDetails = () => {
       }
     }
   };
+
   const handleSubmitReview = async () => {
     if (!reviewText.trim()) return;
 
@@ -84,7 +103,8 @@ const PropertyDetails = () => {
     }
   };
 
-  if (loading) return <p className="text-center mt-8">Loading...</p>;
+  if (isLoading) return <p className="text-center mt-8">Loading...</p>;
+  if (error) return <p className="text-center mt-8">Error: {error.message}</p>;
   if (!property) return <p className="text-center mt-8">Property not found</p>;
 
   return (
@@ -190,7 +210,9 @@ const PropertyDetails = () => {
           reviews.map((review, idx) => (
             <div key={idx} className="border-b py-2">
               <p className="font-medium">{review.userName}:</p>
-              <p className="text-gray-600">{review.comment}</p>
+              <p className="text-gray-600 border wrap-anywhere">
+                {review.comment}
+              </p>
             </div>
           ))
         ) : (

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const AllProperties = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); // ✅ Initialize
 
   const fetchProperties = async () => {
     setLoading(true);
@@ -55,8 +57,13 @@ const AllProperties = () => {
               />
 
               <div className="p-4 space-y-2 flex-1 flex flex-col">
-                <h3 className="text-xl font-semibold">{property.title}</h3>
-                <p className="text-gray-600">{property.location}</p>
+                <h3 className="text-xl font-semibold">
+                  Title: {property.title}
+                </h3>
+                <p className="text-gray-600">
+                  <span className=" font-bold">Location: </span>
+                  {property.location}
+                </p>
 
                 <div className="flex items-center gap-2">
                   <img
@@ -72,13 +79,23 @@ const AllProperties = () => {
                   </span>
                 </div>
 
-                <span className="inline-block px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
-                  Verified
-                </span>
+                <div className="flex justify-start">
+                  {" "}
+                  <span className="px-2 border  py-1 text-xs rounded-full bg-green-100 text-green-700">
+                    Verified
+                  </span>
+                </div>
 
                 <p className="text-gray-700 font-medium">
                   Price: {property.priceRange}
                 </p>
+
+                <button
+                  onClick={() => navigate(`/property/${property._id}`)}
+                  className="mt-auto bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 transition"
+                >
+                  View Details
+                </button>
               </div>
             </div>
           ))}

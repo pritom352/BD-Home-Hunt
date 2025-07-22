@@ -3,58 +3,78 @@ import { useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthContext";
+import { saveUserInDb } from "../../api/utils";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { login, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
-  const handleLogin = (e) => {
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    // console.log(email, password);
-    login(email, password)
-      .then(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Login successful",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/");
-      })
-      .catch((error) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: `${error.message}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+
+    try {
+      const result = await login(email, password);
+
+      const userData = {
+        name: result?.user?.displayName,
+        email: result?.user?.email,
+        image: result?.user?.photoURL,
+      };
+
+      await saveUserInDb(userData);
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Login successful",
+        showConfirmButton: false,
+        timer: 1500,
       });
+
+      navigate("/");
+    } catch (error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: `${error.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
-  const handleGoogleLogin = () => {
-    googleLogin()
-      .then(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Login successful",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/");
-      })
-      .catch((error) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: `${error.message}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await googleLogin();
+      const userData = {
+        name: result?.user?.displayName,
+        email: result?.user?.email,
+        image: result?.user?.photoURL,
+      };
+
+      await saveUserInDb(userData);
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Login successful",
+        showConfirmButton: false,
+        timer: 1500,
       });
+
+      navigate("/");
+    } catch (error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: `${error.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (

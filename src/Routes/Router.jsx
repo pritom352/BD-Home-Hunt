@@ -14,12 +14,15 @@ import MyReviews from "../Pages/MyReviews/MyReviews";
 import AllProperties from "../Pages/Allproperties/Allproperties";
 import MyAddedProperties from "../Pages/MyAddedProperties/MyAddedProperties";
 import ManageProperties from "../Pages/ManageProperties/ManageProperties";
+import PrivateRoute from "./PrivateRoute";
+import UpdateProperty from "../Pages/UpdateProperty/UpdateProperty";
+import ManageUsers from "../Pages/ManageUsers/ManageUsers";
+import ManageReviews from "../Pages/ManageReviews/ManageReviews";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    // errorElement: <NotFound />,
     children: [
       {
         index: true,
@@ -41,7 +44,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardLayout />,
-    // errorElement: <NotFound />,
+
     children: [
       {
         path: "addProperty",
@@ -49,7 +52,11 @@ const router = createBrowserRouter([
       },
       {
         path: "myProfile",
-        element: <MyProfile></MyProfile>,
+        element: (
+          <PrivateRoute>
+            <MyProfile></MyProfile>
+          </PrivateRoute>
+        ),
       },
       {
         path: "wishList",
@@ -63,19 +70,26 @@ const router = createBrowserRouter([
         path: "myReviews",
         element: <MyReviews></MyReviews>,
       },
-      // USER ROUTES
-      // { path: "user/profile", element: <MyProfile /> },
-      // { path: "user/wishlist", element: <Wishlist /> },
-      // { path: "user/bought", element: <PropertyBought /> },
-      // { path: "user/reviews", element: <MyReviews /> },
-      // AGENT ROUTES
-      // { path: "agent/profile", element: <AgentProfile /> },
-      // { path: "agent/add-property", element: <AddProperty /> },
+      {
+        path: "/dashboard/update-property/:id",
+        element: <UpdateProperty></UpdateProperty>,
+      },
+      {
+        path: "/dashboard/manageUsers",
+        element: <ManageUsers></ManageUsers>,
+      },
+      {
+        path: "/dashboard/mahageReviews",
+        element: <ManageReviews></ManageReviews>,
+      },
+
+      // {
+      //   path: "/dashboard/update-property/:id",
+      //   element: <UpdateProperty></UpdateProperty>,
+      // },
+
       { path: "my-properties", element: <MyAddedProperties /> },
-      // { path: "agent/sold-properties", element: <MySoldProperties /> },
-      // { path: "agent/requests", element: <RequestedProperties /> },
-      // ADMIN ROUTES
-      // { path: "admin/profile", element: <AdminProfile /> },
+
       { path: "manage-properties", element: <ManageProperties /> },
       // { path: "admin/manage-users", element: <ManageUsers /> },
       // { path: "admin/manage-reviews", element: <ManageReviews /> },

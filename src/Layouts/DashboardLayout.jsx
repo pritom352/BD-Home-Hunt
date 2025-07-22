@@ -9,6 +9,8 @@ import {
   FaPlus,
   FaClipboardList,
 } from "react-icons/fa";
+import useRole from "../hooks/useRole";
+import Loader from "../Pages/Loader/Loader";
 
 const DashboardLayout = () => {
   const location = useLocation();
@@ -17,7 +19,11 @@ const DashboardLayout = () => {
     `flex items-center gap-2 p-2 rounded hover:bg-blue-100 ${
       location.pathname === path ? "bg-blue-200" : ""
     }`;
-
+  const [role, isRoleLoading] = useRole();
+  console.log(role);
+  if (isRoleLoading) {
+    return <Loader></Loader>;
+  }
   return (
     <div className="flex h-screen">
       {/* Left Sidebar */}
@@ -26,21 +32,28 @@ const DashboardLayout = () => {
           <h1 className="text-2xl font-bold mb-6 text-center">Dashboard</h1>
 
           <nav className="flex flex-col gap-2">
-            <Link to="orders" className={linkClasses("/dashboard/orders")}>
-              <FaClipboardList /> My Orders
-            </Link>
-            <Link
-              to="become-seller"
-              className={linkClasses("/dashboard/become-seller")}
-            >
-              <FaHome /> Become a Seller
-            </Link>
-            <Link
-              to={"/dashboard/addProperty"}
-              className={linkClasses("/dashboard/add-product")}
-            >
-              <FaPlus /> Add Product
-            </Link>
+            {role === "customer" && (
+              <Link to="orders" className={linkClasses("/dashboard/orders")}>
+                <FaClipboardList /> My Orders
+              </Link>
+            )}
+            {role === "agent" && (
+              <Link
+                to={"/dashboard/addProperty"}
+                className={linkClasses("/dashboard/add-product")}
+              >
+                <FaPlus /> Add Product
+              </Link>
+            )}
+            {role === "customer" && (
+              <Link
+                to="become-agent"
+                className={linkClasses("/dashboard/become-agent")}
+              >
+                <FaHome /> Become a agent
+              </Link>
+            )}
+
             {/* my Profile */}
             <Link
               to={"/dashboard/myProfile"}
@@ -48,27 +61,31 @@ const DashboardLayout = () => {
             >
               <FaUser /> My Profile
             </Link>
+            {role === "customer" && (
+              <Link
+                to={"/dashboard/wishList"}
+                className={linkClasses("/dashboard/add-product")}
+              >
+                Wish List
+              </Link>
+            )}
+            {role === "customer" && (
+              <Link to={"/dashboard/myReviews"}>My Reviews</Link>
+            )}
+            {role === "agent" && (
+              <Link to={"/dashboard/my-properties"}>My Properties</Link>
+            )}
+            {role === "admin" && (
+              <Link to={"/dashboard/manage-properties"}>manage-properties</Link>
+            )}
+
             <Link
-              to={"/dashboard/wishList"}
-              className={linkClasses("/dashboard/add-product")}
-            >
-              Wish List
-            </Link>
-            <Link to={"/dashboard/myReviews"}>My Reviews</Link>
-            <Link to={"/dashboard/my-properties"}>My Properties</Link>
-            <Link to={"/dashboard/manage-properties"}>manage-properties</Link>
-            <Link
-              to="inventory"
+              to={"/dashboard/mahageReviews"}
               className={linkClasses("/dashboard/inventory")}
             >
-              <FaBox /> My Inventory
+              <FaBox /> mahageReviews
             </Link>
-            <Link
-              to="manage-orders"
-              className={linkClasses("/dashboard/manage-orders")}
-            >
-              <FaClipboardList /> Manage Orders
-            </Link>
+
             <Link
               to="statistics"
               className={linkClasses("/dashboard/statistics")}
@@ -76,7 +93,7 @@ const DashboardLayout = () => {
               <FaChartBar /> Statistics
             </Link>
             <Link
-              to="manage-users"
+              to={"/dashboard/manageUsers"}
               className={linkClasses("/dashboard/manage-users")}
             >
               <FaUsers /> Manage Users
