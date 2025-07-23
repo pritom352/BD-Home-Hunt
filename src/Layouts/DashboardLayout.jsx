@@ -20,7 +20,7 @@ const DashboardLayout = () => {
       location.pathname === path ? "bg-blue-200" : ""
     }`;
   const [role, isRoleLoading] = useRole();
-  console.log(role);
+
   if (isRoleLoading) {
     return <Loader></Loader>;
   }
@@ -33,13 +33,9 @@ const DashboardLayout = () => {
 
           <nav className="flex flex-col gap-2">
             {role === "customer" && (
-              <Link
-                to={"/dashboard/agentOffers"}
-                // className={linkClasses("/dashboard/agentOffers")}
-              >
-                <FaClipboardList /> AgentOffers
-              </Link>
+              <Link to={"/dashboard/agentOffers"}>AgentOffers</Link>
             )}
+            <Link to={"/dashboard/propertyBought"}>propertyBought</Link>
             {role === "agent" && (
               <Link
                 to={"/dashboard/addProperty"}

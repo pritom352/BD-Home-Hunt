@@ -3,7 +3,6 @@ import Home from "../Pages/Home/Home";
 import MainLayout from "../Layouts/MainLayout";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
-// import AddProperty from "../Pages/AddProperty/AddProperty";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import PropertyDetails from "../Pages/PropertyDetails/PropertyDetails";
 import AddProperty from "../Pages/AddProperty/AddProperty";
@@ -19,6 +18,7 @@ import UpdateProperty from "../Pages/UpdateProperty/UpdateProperty";
 import ManageUsers from "../Pages/ManageUsers/ManageUsers";
 import ManageReviews from "../Pages/ManageReviews/ManageReviews";
 import AgentOffers from "../Pages/AgentOffers/AgentOffers";
+import PropertyBought from "../Pages/PropertyBought/PropertyBought";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +36,11 @@ const router = createBrowserRouter([
       },
       {
         path: "property/:id",
-        element: <PropertyDetails />,
+        element: (
+          <PrivateRoute>
+            <PropertyDetails />
+          </PrivateRoute>
+        ),
       },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
@@ -44,12 +48,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
 
     children: [
       {
         path: "addProperty",
-        element: <AddProperty></AddProperty>,
+        element: (
+          <PrivateRoute>
+            <AddProperty></AddProperty>
+          </PrivateRoute>
+        ),
       },
       {
         path: "myProfile",
@@ -61,45 +73,87 @@ const router = createBrowserRouter([
       },
       {
         path: "wishList",
-        element: <WishlistPage></WishlistPage>,
+        element: (
+          <PrivateRoute>
+            <WishlistPage></WishlistPage>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/propertyBought",
+        element: (
+          <PrivateRoute>
+            <PropertyBought></PropertyBought>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/makeOffer/:id",
-        element: <MakeOfferPage></MakeOfferPage>,
+        element: (
+          <PrivateRoute>
+            <MakeOfferPage></MakeOfferPage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "myReviews",
-        element: <MyReviews></MyReviews>,
+        element: (
+          <PrivateRoute>
+            <MyReviews></MyReviews>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/update-property/:id",
-        element: <UpdateProperty></UpdateProperty>,
+        element: (
+          <PrivateRoute>
+            <UpdateProperty></UpdateProperty>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/manageUsers",
-        element: <ManageUsers></ManageUsers>,
+        element: (
+          <PrivateRoute>
+            <ManageUsers></ManageUsers>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/agentOffers",
-        element: <AgentOffers></AgentOffers>,
+        element: (
+          <PrivateRoute>
+            <AgentOffers></AgentOffers>
+          </PrivateRoute>
+        ),
       },
 
       {
         path: "/dashboard/mahageReviews",
-        element: <ManageReviews></ManageReviews>,
+        element: (
+          <PrivateRoute>
+            <ManageReviews></ManageReviews>
+          </PrivateRoute>
+        ),
       },
 
-      // {
-      //   path: "/dashboard/update-property/:id",
-      //   element: <UpdateProperty></UpdateProperty>,
-      // },
+      {
+        path: "my-properties",
+        element: (
+          <PrivateRoute>
+            <MyAddedProperties />
+          </PrivateRoute>
+        ),
+      },
 
-      { path: "my-properties", element: <MyAddedProperties /> },
-
-      { path: "manage-properties", element: <ManageProperties /> },
-      // { path: "admin/manage-users", element: <ManageUsers /> },
-      // { path: "admin/manage-reviews", element: <ManageReviews /> },
-      // { path: "admin/advertise", element: <AdvertiseProperty /> },
+      {
+        path: "manage-properties",
+        element: (
+          <PrivateRoute>
+            <ManageProperties />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);
