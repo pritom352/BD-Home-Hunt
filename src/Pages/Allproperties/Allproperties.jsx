@@ -5,7 +5,8 @@ import { useNavigate } from "react-router";
 const AllProperties = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // ✅ Initialize
+  const [searchLocation, setSearchLocation] = useState(""); // 🔍 Search input
+  const navigate = useNavigate();
 
   const fetchProperties = async () => {
     setLoading(true);
@@ -25,23 +26,38 @@ const AllProperties = () => {
     fetchProperties();
   }, []);
 
+  const filteredProperties = properties.filter((property) =>
+    property.location?.toLowerCase().includes(searchLocation.toLowerCase())
+  );
+
   if (loading) {
     return <div className="text-center py-10">Loading properties...</div>;
   }
 
   return (
     <section className="max-w-7xl mx-auto py-10 px-4">
-      <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
+      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
         All Listed Properties
       </h2>
 
-      {properties.length === 0 ? (
+      {/* 🔍 Search Input */}
+      <div className="mb-8 flex justify-center">
+        <input
+          type="text"
+          placeholder="🔍 Search by location..."
+          value={searchLocation}
+          onChange={(e) => setSearchLocation(e.target.value)}
+          className="w-full sm:w-[400px] px-5 py-3 rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+        />
+      </div>
+
+      {filteredProperties.length === 0 ? (
         <p className="text-center text-gray-500">
-          No verified properties found.
+          No verified properties found for this location.
         </p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {properties.map((property) => (
+          {filteredProperties.map((property) => (
             <div
               key={property._id}
               className="bg-white shadow rounded overflow-hidden hover:shadow-lg transition flex flex-col"
@@ -80,8 +96,7 @@ const AllProperties = () => {
                 </div>
 
                 <div className="flex justify-start">
-                  {" "}
-                  <span className="px-2 border  py-1 text-xs rounded-full bg-green-100 text-green-700">
+                  <span className="px-2 border py-1 text-xs rounded-full bg-green-100 text-green-700">
                     Verified
                   </span>
                 </div>

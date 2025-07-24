@@ -37,12 +37,7 @@ const DashboardLayout = () => {
             )}
             <Link to={"/dashboard/propertyBought"}>propertyBought</Link>
             {role === "agent" && (
-              <Link
-                to={"/dashboard/addProperty"}
-                className={linkClasses("/dashboard/add-product")}
-              >
-                <FaPlus /> Add Product
-              </Link>
+              <Link to={"/dashboard/addProperty"}>Add Product</Link>
             )}
             {role === "customer" && (
               <Link
