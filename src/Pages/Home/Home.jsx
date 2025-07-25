@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router";
 import AdvertisementSection from "../../Components/AdvertisementSection";
 import LatestReviews from "../../Components/LatestReviews";
 import TopAgent from "../../Components/TopAgent";
+import HowItWorks from "../../Components/HowItWorks";
 
 const Home = () => {
   const properties = useLoaderData();
@@ -12,7 +13,7 @@ const Home = () => {
       <Banner></Banner>
       <AdvertisementSection properties={properties}></AdvertisementSection>
       <TopAgent></TopAgent>
-
+      <HowItWorks></HowItWorks>
       <LatestReviews></LatestReviews>
     </div>
   );
