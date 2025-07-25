@@ -1,44 +1,46 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
 const AgentOffers = () => {
   const { user } = useContext(AuthContext);
-  const [offers, setOffers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  const fetchOffers = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3000/agent-offers?agentEmail=${user?.email}`
+  const {
+    data: offers = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["agentOffers", user?.email],
+    enabled: !!user?.email,
+    queryFn: async ({ queryKey }) => {
+      const email = queryKey[1];
+      const res = await axios.get(
+        `http://localhost:3000/agent-offers?agentEmail=${email}`
       );
-      setOffers(data);
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-    }
-  };
+      return res.data;
+    },
+  });
 
-  useEffect(() => {
-    if (user?.email) {
-      fetchOffers();
-    }
-  }, [user?.email]);
-
-  const updateStatus = async (id, propertyId, status) => {
-    try {
+  const mutation = useMutation({
+    mutationFn: async ({ id, propertyId, status }) => {
       await axios.patch(`http://localhost:3000/offers/${id}/status`, {
-        status,
         propertyId,
+        status,
       });
-      fetchOffers();
-    } catch (err) {
-      console.error(err);
-    }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["agentOffers", user?.email] });
+    },
+  });
+
+  const handleStatusUpdate = (id, propertyId, status) => {
+    mutation.mutate({ id, propertyId, status });
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (isLoading) return <p className="text-center py-6">Loading...</p>;
+  if (isError) return <p className="text-center py-6">Error loading offers.</p>;
 
   return (
     <div className="max-w-6xl mx-auto p-6">
@@ -74,7 +76,11 @@ const AgentOffers = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() =>
-                          updateStatus(offer._id, offer.propertyId, "accepted")
+                          handleStatusUpdate(
+                            offer._id,
+                            offer.propertyId,
+                            "accepted"
+                          )
                         }
                         className="px-3 py-1 bg-green-500 text-white rounded"
                       >
@@ -82,7 +88,11 @@ const AgentOffers = () => {
                       </button>
                       <button
                         onClick={() =>
-                          updateStatus(offer._id, offer.propertyId, "rejected")
+                          handleStatusUpdate(
+                            offer._id,
+                            offer.propertyId,
+                            "rejected"
+                          )
                         }
                         className="px-3 py-1 bg-red-500 text-white rounded"
                       >

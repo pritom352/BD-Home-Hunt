@@ -1,32 +1,37 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchOffers = async (email) => {
+  const { data } = await axios.get(
+    `http://localhost:3000/buyer-offers?buyerEmail=${email}`
+  );
+  return data;
+};
 
 const PropertyBought = () => {
   const { user } = useContext(AuthContext);
-  const [offers, setOffers] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  const fetchOffers = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3000/buyer-offers?buyerEmail=${user?.email}`
-      );
-      setOffers(data);
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-    }
-  };
+  const {
+    data: offers = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["buyerOffers", user?.email],
+    queryFn: () => fetchOffers(user.email),
+    enabled: !!user?.email,
+  });
 
-  useEffect(() => {
-    if (user?.email) {
-      fetchOffers();
-    }
-  }, [user?.email]);
+  if (isLoading) return <p className="text-center mt-8">Loading...</p>;
+  if (isError)
+    return (
+      <p className="text-center mt-8 text-red-600">Failed to load offers.</p>
+    );
 
-  if (loading) return <p>Loading...</p>;
+  if (offers.length === 0)
+    return <p className="text-center mt-8 text-gray-500">No offers found.</p>;
+  console.log("offfffffffffffffffff", offers);
 
   return (
     <div className="max-w-6xl mx-auto p-6">
@@ -38,7 +43,7 @@ const PropertyBought = () => {
             className="bg-white shadow-md rounded-lg overflow-hidden"
           >
             <img
-              src={offer.propertyImage || "https://via.placeholder.com/300"}
+              src={offer.images}
               alt={offer.propertyTitle}
               className="w-full h-48 object-cover"
             />

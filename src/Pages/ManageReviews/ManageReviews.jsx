@@ -24,32 +24,38 @@ const ManageReviews = () => {
     return <div className="text-center py-10">Loading reviews...</div>;
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
-      <h2 className="text-3xl font-bold mb-6 text-center">Manage Reviews</h2>
+    <div className="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+        Manage Reviews
+      </h2>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {reviews.map((r) => (
           <div
             key={r._id}
-            className="bg-white shadow-md rounded-lg p-4 flex flex-col gap-2 hover:shadow-lg transition"
+            className="bg-white shadow rounded-xl p-4 flex flex-col gap-4 hover:shadow-lg transition-all duration-300"
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <img
                 src={r.userImage}
                 alt={r.userName}
-                className="w-12 h-12 rounded-full object-cover border"
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border"
               />
               <div>
-                <h4 className="text-lg font-semibold">{r.userName}</h4>
+                <h4 className="text-base sm:text-lg font-semibold">
+                  {r.userName}
+                </h4>
                 <p className="text-sm text-gray-500">{r.userEmail}</p>
               </div>
             </div>
 
-            <p className="text-gray-700 mt-2 flex-1">{r.comment}</p>
+            <p className="text-gray-700 text-sm sm:text-base line-clamp-4 overflow-scroll">
+              {r.comment}
+            </p>
 
             <button
               onClick={() => deleteMutation.mutate(r._id)}
-              className="px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded shadow self-end"
+              className="mt-auto w-full sm:w-auto px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-md shadow transition"
             >
               Delete
             </button>

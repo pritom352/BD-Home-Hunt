@@ -1,64 +1,78 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 const MakeOfferPage = () => {
   const { id } = useParams(); // propertyId
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
-  const [property, setProperty] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [offerAmount, setOfferAmount] = useState("");
   const [buyingDate, setBuyingDate] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/property/${id}`)
-      .then((res) => setProperty(res.data))
-      .catch(() => setErrorMsg("Failed to load property."))
-      .finally(() => setLoading(false));
-  }, [id]);
+  // ✅ Fetch property using useQuery (queryFn used properly)
+  const {
+    data: property,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["property", id],
+    enabled: !!id,
+    queryFn: async () => {
+      const res = await axios.get(`http://localhost:3000/property/${id}`);
+      return res.data;
+    },
+  });
+  console.log("sldkjflsdjflsdfj", property);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!offerAmount || !buyingDate) {
-      setErrorMsg("Please fill all the fields.");
-      return;
-    }
-    console.log(property.agentEmail);
-
-    try {
-      const res = await axios.post(`http://localhost:3000/offers`, {
-        propertyId: id,
-        offerAmount,
-        buyerEmail: user?.email,
-        buyerName: user?.displayName,
-        buyingDate,
-        agentEmail: property?.agentEmail,
-      });
-
-      if (res.status === 201) {
-        setSuccessMsg("✅ Offer submitted successfully!");
-        setErrorMsg("");
-        setTimeout(() => navigate("/dashboard"), 2000);
-      }
-    } catch (err) {
+  // ✅ Mutation to submit offer
+  const offerMutation = useMutation({
+    mutationFn: async (newOffer) => {
+      const res = await axios.post(`http://localhost:3000/offers`, newOffer);
+      return res.data;
+    },
+    onSuccess: () => {
+      setSuccessMsg("✅ Offer submitted successfully!");
+      setErrorMsg("");
+      setTimeout(() => navigate("/dashboard"), 2000);
+    },
+    onError: (err) => {
       setSuccessMsg("");
       if (err.response?.data?.message) {
         setErrorMsg(err.response.data.message);
       } else {
         setErrorMsg("Something went wrong.");
       }
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!offerAmount || !buyingDate) {
+      setErrorMsg("Please fill all the fields.");
+      return;
     }
+
+    offerMutation.mutate({
+      propertyId: id,
+      offerAmount,
+      buyerEmail: user?.email,
+      buyerName: user?.displayName,
+      buyingDate,
+      agentEmail: property?.agentEmail,
+      images: property?.images,
+    });
   };
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
-  if (!property) return <p className="text-center mt-10">Property not found</p>;
+  if (isLoading) return <p className="text-center mt-10">Loading...</p>;
+  if (isError || !property)
+    return (
+      <p className="text-center mt-10 text-red-600">Property not found.</p>
+    );
 
   const [minPrice, maxPrice] =
     property.priceRange

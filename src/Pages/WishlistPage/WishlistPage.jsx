@@ -1,52 +1,60 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import { Link } from "react-router";
+import { Link } from "react-router"; // corrected import
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+const fetchWishlist = async (email) => {
+  const res = await axios.get(
+    `http://localhost:3000/wishlist?userEmail=${email}`
+  );
+  return res.data;
+};
+
+const deleteWishlistItem = async (id) => {
+  await axios.delete(`http://localhost:3000/wishlist/${id}`);
+};
 
 const WishlistPage = () => {
   const { user } = useContext(AuthContext);
-  const [wishlist, setWishlist] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (!user?.email) return; // safeguard
+  // Fetch wishlist using React Query v5 object syntax
+  const {
+    data: wishlist = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["wishlist", user?.email],
+    queryFn: () => fetchWishlist(user.email),
+    enabled: !!user?.email,
+  });
 
-    const fetchWishlist = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3000/wishlist?userEmail=${user.email}`
-        );
-        setWishlist(res.data);
-      } catch (error) {
-        console.error("Failed to fetch wishlist:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Mutation to delete wishlist item using object syntax
+  const mutation = useMutation({
+    mutationFn: deleteWishlistItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["wishlist", user?.email] });
+    },
+    onError: (error) => {
+      alert("Failed to remove item. Try again.");
+      console.error(error);
+    },
+  });
 
-    fetchWishlist();
-  }, [user?.email]);
-
-  const handleRemove = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/wishlist/${id}`);
-      setWishlist((prev) => prev.filter((item) => item._id !== id));
-    } catch (error) {
-      console.error("Failed to remove wishlist item:", error);
-    }
+  const handleRemove = (id) => {
+    mutation.mutate(id);
   };
 
-  //   const handleMakeOffer = (property) => {
-  //     alert(`You can now make an offer on: ${property.propertyTitle}`);
-  //   };
-
-  if (loading) return <p className="text-center mt-8">Loading...</p>;
-
-  if (wishlist.length === 0) {
+  if (isLoading) return <p className="text-center mt-8">Loading...</p>;
+  if (isError)
+    return (
+      <p className="text-center mt-8 text-red-600">Error loading wishlist.</p>
+    );
+  if (wishlist.length === 0)
     return (
       <p className="text-center text-gray-500 mt-8">No items in wishlist.</p>
     );
-  }
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
@@ -90,16 +98,14 @@ const WishlistPage = () => {
 
               <div className="flex justify-between mt-4">
                 <Link to={`/dashboard/makeOffer/${item.propertyId}`}>
-                  <button
-                    // onClick={() => handleMakeOffer(item)}
-                    className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
+                  <button className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
                     📝 Make an Offer
                   </button>
                 </Link>
                 <button
                   onClick={() => handleRemove(item._id)}
-                  className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                  disabled={mutation.isLoading}
+                  className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
                 >
                   ❌ Remove
                 </button>

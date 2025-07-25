@@ -1,46 +1,45 @@
-import { useEffect, useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 const ManageProperties = () => {
-  const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  const fetchProperties = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get("http://localhost:3000/property");
-      setProperties(res.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    data: properties = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["properties"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:3000/propertys");
+      return res.data;
+    },
+  });
 
-  const updateStatus = async (id, status) => {
-    try {
+  const mutation = useMutation({
+    mutationFn: async ({ id, status }) => {
       await axios.patch(`http://localhost:3000/property/${id}/status`, {
         verificationStatus: status,
       });
-      setProperties((prev) =>
-        prev.map((p) =>
-          p._id === id ? { ...p, verificationStatus: status } : p
-        )
-      );
-      alert(`Property ${status} successfully`);
-    } catch (err) {
-      console.error(err);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["properties"] });
+      alert("Property status updated successfully");
+    },
+    onError: () => {
       alert("Failed to update status");
-    }
-  };
+    },
+  });
 
-  useEffect(() => {
-    fetchProperties();
-  }, []);
+  if (isLoading) return <div className="text-center py-10">Loading...</div>;
 
-  if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
-  }
+  if (isError)
+    return (
+      <div className="text-center py-10 text-red-600">
+        Error: {error.message}
+      </div>
+    );
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-8">
@@ -68,14 +67,26 @@ const ManageProperties = () => {
                 {property.verificationStatus === "pending" && (
                   <>
                     <button
-                      onClick={() => updateStatus(property._id, "verified")}
+                      onClick={() =>
+                        mutation.mutate({
+                          id: property._id,
+                          status: "verified",
+                        })
+                      }
                       className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700"
+                      disabled={mutation.isLoading}
                     >
                       Verify
                     </button>
                     <button
-                      onClick={() => updateStatus(property._id, "rejected")}
+                      onClick={() =>
+                        mutation.mutate({
+                          id: property._id,
+                          status: "rejected",
+                        })
+                      }
                       className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                      disabled={mutation.isLoading}
                     >
                       Reject
                     </button>

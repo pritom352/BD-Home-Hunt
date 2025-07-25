@@ -1,28 +1,29 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const LatestReviews = () => {
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: reviews = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["latestReviews"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:3000/reviews/latest");
+      return res.data;
+    },
+  });
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/reviews/latest");
-        const data = await res.json();
-        setReviews(data);
-      } catch (err) {
-        console.error("Failed to fetch reviews", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchReviews();
-  }, []);
-
-  if (loading) {
+  if (isLoading)
     return <div className="text-center py-10">Loading reviews...</div>;
-  }
+
+  if (isError)
+    return (
+      <div className="text-center py-10 text-red-600">
+        Error: {error.message || "Failed to load reviews."}
+      </div>
+    );
 
   return (
     <section className="max-w-6xl mx-auto py-12 px-4">

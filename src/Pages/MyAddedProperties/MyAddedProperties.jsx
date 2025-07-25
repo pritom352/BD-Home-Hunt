@@ -1,44 +1,48 @@
-import { useEffect, useState, useContext } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext } from "react";
 import { Link } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
 const MyAddedProperties = () => {
   const { user } = useContext(AuthContext);
-  const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  const fetchMyProperties = async () => {
-    setLoading(true);
-    try {
+  const {
+    data: properties = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["myProperties", user?.email],
+    queryFn: async ({ queryKey }) => {
+      const email = queryKey[1];
       const res = await axios.get(
-        `http://localhost:3000/myProperty?agentEmail=${user.email}`
+        `http://localhost:3000/myProperty?agentEmail=${email}`
       );
-      setProperties(res.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+      return res.data;
+    },
+    enabled: !!user?.email,
+  });
 
-  useEffect(() => {
-    fetchMyProperties();
-  }, []);
-
-  const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete?")) return;
-    try {
+  const mutation = useMutation({
+    mutationFn: async (id) => {
       await axios.delete(`http://localhost:3000/property/${id}`);
-      setProperties(properties.filter((p) => p._id !== id));
-    } catch (err) {
-      console.error(err);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["myProperties", user?.email],
+      });
+    },
+  });
+
+  const handleDelete = (id) => {
+    if (confirm("Are you sure you want to delete?")) {
+      mutation.mutate(id);
     }
   };
 
-  if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
-  }
+  if (isLoading) return <div className="text-center py-10">Loading...</div>;
+  if (isError) return <div className="text-center py-10">Failed to fetch.</div>;
 
   return (
     <section className="max-w-7xl mx-auto py-10 px-4">
@@ -52,7 +56,6 @@ const MyAddedProperties = () => {
             key={property._id}
             className="bg-white shadow rounded p-4 flex flex-col"
           >
-            {/* Image */}
             <img
               src={
                 property.image ||
@@ -63,16 +66,13 @@ const MyAddedProperties = () => {
               className="w-full h-40 object-cover rounded"
             />
 
-            {/* Title */}
             <h3 className="text-lg font-semibold mt-2 line-clamp-2 min-h-[3em]">
               {property.title}
             </h3>
 
-            {/* Middle Content */}
             <div className="flex-1 flex flex-col justify-center gap-1 text-sm text-gray-700">
               <p>{property.location}</p>
 
-              {/* Agent */}
               <div className="flex items-center gap-2">
                 <img
                   src={
@@ -85,7 +85,6 @@ const MyAddedProperties = () => {
                 <span>{property.agentName}</span>
               </div>
 
-              {/* Verification */}
               <span
                 className={`px-2 py-1 rounded text-xs self-start ${
                   property.verificationStatus === "verified"
@@ -103,7 +102,6 @@ const MyAddedProperties = () => {
               <p>Max Price: {property.maxPrice}</p>
             </div>
 
-            {/* Buttons */}
             <div className="flex gap-2 mt-2">
               {property.verificationStatus !== "rejected" && (
                 <Link

@@ -1,38 +1,42 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
 const AllProperties = () => {
-  const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [searchLocation, setSearchLocation] = useState(""); // 🔍 Search input
+  const [searchLocation, setSearchLocation] = useState("");
   const navigate = useNavigate();
 
-  const fetchProperties = async () => {
-    setLoading(true);
-    try {
+  const {
+    data: properties,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["verifiedProperties"],
+    queryFn: async () => {
       const res = await axios.get(
         "http://localhost:3000/property?verifiedOnly=true"
       );
-      setProperties(res.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+      return res.data;
+    },
+  });
 
-  useEffect(() => {
-    fetchProperties();
-  }, []);
+  if (isLoading) {
+    return <div className="text-center py-10">Loading properties...</div>;
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center py-10 text-red-500">
+        Error: {error.message || "Something went wrong"}
+      </div>
+    );
+  }
 
   const filteredProperties = properties.filter((property) =>
     property.location?.toLowerCase().includes(searchLocation.toLowerCase())
   );
-
-  if (loading) {
-    return <div className="text-center py-10">Loading properties...</div>;
-  }
 
   return (
     <section className="max-w-7xl mx-auto py-10 px-4">
@@ -40,7 +44,7 @@ const AllProperties = () => {
         All Listed Properties
       </h2>
 
-      {/* 🔍 Search Input */}
+      {/* Search Input */}
       <div className="mb-8 flex justify-center">
         <input
           type="text"

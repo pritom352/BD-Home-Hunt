@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
@@ -7,44 +7,40 @@ import { useQuery } from "@tanstack/react-query";
 const PropertyDetails = () => {
   const { user } = useContext(AuthContext);
   const { id } = useParams();
+
   const [wishlistMsg, setWishlistMsg] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
-  const [reviews, setReviews] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [reviewText, setReviewText] = useState("");
 
+  // Fetch Property Data
   const {
     data: property,
-    isLoading,
-    error,
+    isLoading: propertyLoading,
+    error: propertyError,
   } = useQuery({
     queryKey: ["property", id],
     queryFn: async () => {
-      const { data } = await axios(`http://localhost:3000/property/${id}`);
+      const { data } = await axios.get(`http://localhost:3000/property/${id}`);
       setSelectedImage(data.image || data.images?.[0]);
       return data;
     },
   });
 
-  // ফেচ করবো সব রিভিউ (userEmail ছাড়াই)
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const res = await fetch(`http://localhost:3000/reviews`);
-        if (res.ok) {
-          const data = await res.json();
-          setReviews(data);
-        } else {
-          console.error("Failed to fetch reviews");
-        }
-      } catch (err) {
-        console.error("Error fetching reviews:", err);
-      }
-    };
+  // Fetch Reviews
+  const {
+    data: reviews = [],
+    isLoading: reviewsLoading,
+    refetch: refetchReviews,
+  } = useQuery({
+    queryKey: ["reviews", id],
+    queryFn: async () => {
+      const { data } = await axios.get(`http://localhost:3000/reviews`);
+      return data.filter((review) => review.propertyId === id);
+    },
+  });
 
-    fetchReviews();
-  }, []);
-
+  // Handle Wishlist
   const handleAddToWishlist = async () => {
     try {
       const res = await axios.post("http://localhost:3000/wishlist", {
@@ -65,6 +61,7 @@ const PropertyDetails = () => {
     }
   };
 
+  // Submit Review
   const handleSubmitReview = async () => {
     if (!reviewText.trim()) return;
 
@@ -79,20 +76,9 @@ const PropertyDetails = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:3000/reviews`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(review),
-      });
-
-      if (res.ok) {
-        setReviews([
-          ...reviews,
-          {
-            userName: review.userName,
-            comment: review.comment,
-          },
-        ]);
+      const res = await axios.post(`http://localhost:3000/reviews`, review);
+      if (res.status === 201 || res.status === 200) {
+        refetchReviews();
         setReviewText("");
         setShowModal(false);
       } else {
@@ -103,8 +89,9 @@ const PropertyDetails = () => {
     }
   };
 
-  if (isLoading) return <p className="text-center mt-8">Loading...</p>;
-  if (error) return <p className="text-center mt-8">Error: {error.message}</p>;
+  if (propertyLoading) return <p className="text-center mt-8">Loading...</p>;
+  if (propertyError)
+    return <p className="text-center mt-8">Error loading property</p>;
   if (!property) return <p className="text-center mt-8">Property not found</p>;
 
   return (
@@ -113,7 +100,7 @@ const PropertyDetails = () => {
         🏡 Property Details
       </h1>
 
-      {/* Main Section */}
+      {/* Property Display */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row gap-6">
         <div className="md:w-2/3 overflow-hidden">
           <img
@@ -121,7 +108,6 @@ const PropertyDetails = () => {
             alt={property.title}
             className="w-full h-[500px] object-cover hover:scale-105 transition-transform duration-500 rounded"
           />
-
           <div className="flex gap-2 mt-4 flex-wrap">
             {property.images?.map((img, i) => (
               <img
@@ -142,15 +128,12 @@ const PropertyDetails = () => {
             <h2 className="text-3xl font-semibold text-gray-800">
               {property.title}
             </h2>
-
             <p className="text-gray-600 mt-2 text-justify">
               {property.description}
             </p>
-
             <p className="text-gray-500 mt-2">
               📍 <span className="font-medium">{property.location}</span>
             </p>
-
             <div className="mt-4 flex flex-wrap gap-4">
               <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-lg font-semibold">
                 💲 {property.priceRange}
@@ -172,10 +155,10 @@ const PropertyDetails = () => {
         </div>
       </div>
 
+      {/* Agent Info */}
       <h2 className="text-2xl font-semibold text-gray-700 mt-10">
         👨‍💼 Agent Information
       </h2>
-
       <div className="bg-white rounded-xl shadow-lg overflow-hidden p-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <img
@@ -202,17 +185,16 @@ const PropertyDetails = () => {
         </div>
       </div>
 
-      {/* Reviews */}
+      {/* Reviews Section */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden p-6 mt-6 space-y-4">
         <h3 className="text-2xl font-semibold">📋 Reviews</h3>
-
-        {reviews.length > 0 ? (
+        {reviewsLoading ? (
+          <p>Loading reviews...</p>
+        ) : reviews.length > 0 ? (
           reviews.map((review, idx) => (
             <div key={idx} className="border-b py-2">
               <p className="font-medium">{review.userName}:</p>
-              <p className="text-gray-600 border wrap-anywhere">
-                {review.comment}
-              </p>
+              <p className="text-gray-600 break-words">{review.comment}</p>
             </div>
           ))
         ) : (
@@ -227,7 +209,7 @@ const PropertyDetails = () => {
         </button>
       </div>
 
-      {/* Modal */}
+      {/* Review Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
