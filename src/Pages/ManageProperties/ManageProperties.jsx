@@ -1,5 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import toast from "react-hot-toast";
+import Loader from "../Loader/Loader";
 
 const ManageProperties = () => {
   const queryClient = useQueryClient();
@@ -25,14 +27,14 @@ const ManageProperties = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["properties"] });
-      alert("Property status updated successfully");
+      toast.success("Property status updated successfully");
     },
     onError: () => {
-      alert("Failed to update status");
+      toast.error("Failed to update status");
     },
   });
 
-  if (isLoading) return <div className="text-center py-10">Loading...</div>;
+  if (isLoading) return <Loader></Loader>;
 
   if (isError)
     return (
@@ -42,11 +44,13 @@ const ManageProperties = () => {
     );
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold text-center mb-6">Manage Properties</h2>
-      <table className="w-full border">
+    <section className="max-w-6xl mx-auto  my-25">
+      <h2 className="text-4xl font-bold text-center mb-15">
+        Manage Properties
+      </h2>
+      <table className="w-full  ">
         <thead>
-          <tr className="bg-gray-100">
+          <tr className="bg-secondary">
             <th className="p-2 border">Title</th>
             <th className="p-2 border">Location</th>
             <th className="p-2 border">Agent</th>
@@ -57,7 +61,7 @@ const ManageProperties = () => {
         </thead>
         <tbody>
           {properties.map((property) => (
-            <tr key={property._id}>
+            <tr className=" bg-secondary" key={property._id}>
               <td className="p-2 border">{property.title}</td>
               <td className="p-2 border">{property.location}</td>
               <td className="p-2 border">{property.agentName}</td>

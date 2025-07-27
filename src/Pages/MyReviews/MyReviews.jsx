@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import Loader from "../Loader/Loader";
+import toast from "react-hot-toast";
 
 const MyReviews = () => {
   const { user } = useContext(AuthContext);
@@ -37,15 +39,12 @@ const MyReviews = () => {
     deleteMutation.mutate(id);
   };
 
-  if (isLoading) return <p className="text-center mt-8">Loading…</p>;
-  if (isError)
-    return (
-      <p className="text-center mt-8 text-red-600">Error: {error.message}</p>
-    );
+  if (isLoading) return <Loader></Loader>;
+  if (isError) return toast.error(error.message);
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-4">
-      <h1 className="text-3xl font-bold text-center">📝 My Reviews</h1>
+    <div className="max-w-6xl mx-auto mt-25  space-y-4">
+      <h1 className="text-4xl font-bold mb-15 text-center">📝 My Reviews</h1>
 
       {reviews.length === 0 && (
         <p className="text-center text-gray-500">No reviews found.</p>

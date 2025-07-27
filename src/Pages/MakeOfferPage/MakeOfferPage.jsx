@@ -3,9 +3,10 @@ import { useParams, useNavigate } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import Loader from "../Loader/Loader";
 
 const MakeOfferPage = () => {
-  const { id } = useParams(); // propertyId
+  const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
@@ -14,7 +15,6 @@ const MakeOfferPage = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  // ✅ Fetch property using useQuery (queryFn used properly)
   const {
     data: property,
     isLoading,
@@ -27,9 +27,8 @@ const MakeOfferPage = () => {
       return res.data;
     },
   });
-  console.log("sldkjflsdjflsdfj", property);
 
-  // ✅ Mutation to submit offer
+  //  Mutation to submit offer
   const offerMutation = useMutation({
     mutationFn: async (newOffer) => {
       const res = await axios.post(`http://localhost:3000/offers`, newOffer);
@@ -68,7 +67,7 @@ const MakeOfferPage = () => {
     });
   };
 
-  if (isLoading) return <p className="text-center mt-10">Loading...</p>;
+  if (isLoading) return <Loader></Loader>;
   if (isError || !property)
     return (
       <p className="text-center mt-10 text-red-600">Property not found.</p>

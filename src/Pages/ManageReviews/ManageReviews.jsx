@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import Loader from "../Loader/Loader";
 
 const fetchReviews = async () => {
   const { data } = await axios.get("http://localhost:3000/reviews/all");
@@ -20,12 +21,11 @@ const ManageReviews = () => {
     onSuccess: () => queryClient.invalidateQueries(["reviews"]),
   });
 
-  if (isLoading)
-    return <div className="text-center py-10">Loading reviews...</div>;
+  if (isLoading) return <Loader></Loader>;
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+    <div className="max-w-6xl mx-auto my-25   ">
+      <h2 className="text-4xl sm:text-3xl font-bold mb-15 text-center">
         Manage Reviews
       </h2>
 
@@ -33,7 +33,7 @@ const ManageReviews = () => {
         {reviews.map((r) => (
           <div
             key={r._id}
-            className="bg-white shadow rounded-xl p-4 flex flex-col gap-4 hover:shadow-lg transition-all duration-300"
+            className="bg-secondary shadow rounded-xl p-4 flex flex-col gap-4 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex items-center gap-4">
               <img

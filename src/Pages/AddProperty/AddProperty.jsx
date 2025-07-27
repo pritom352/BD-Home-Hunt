@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { imageUpload } from "../../api/utils";
+import toast from "react-hot-toast";
 
 const AddProperty = () => {
   const { user } = useContext(AuthContext);
@@ -15,43 +16,47 @@ const AddProperty = () => {
     const minPrice = form.minPrice.value;
     const maxPrice = form.maxPrice.value;
     const description = form.description.value;
-
     const files = form.images.files;
 
-    const imageUrls = [];
-    for (let file of files) {
-      const url = await imageUpload(file);
-      imageUrls.push(url);
+    try {
+      const imageUrls = [];
+      for (let file of files) {
+        const url = await imageUpload(file);
+        imageUrls.push(url);
+      }
+
+      const landData = {
+        title,
+        location,
+        description,
+        priceRange: `$${minPrice} - $${maxPrice}`,
+        images: imageUrls,
+        agentName: user?.displayName,
+        agentEmail: user?.email,
+        agentImage: user?.photoURL,
+      };
+
+      const { data } = await axios.post(
+        "http://localhost:3000/add-property",
+        landData
+      );
+
+      toast.success("✅ Property Added!");
+      form.reset();
+    } catch (error) {
+      console.error("Error adding property:", error);
+      toast.error("❌ Failed to add property. Please try again.");
     }
-
-    const landData = {
-      title,
-      location,
-      description,
-      priceRange: `$${minPrice} - $${maxPrice}`,
-      images: imageUrls,
-      agentName: user?.displayName,
-      agentEmail: user?.email,
-      agentImage: user?.photoURL,
-    };
-
-    console.log(landData);
-
-    const data = await axios.post(
-      "http://localhost:3000/add-property",
-      landData
-    );
-
-    console.log(data);
-    alert("✅ Property Added!");
-    form.reset();
   };
 
   return (
-    <section className="max-w-3xl mx-auto mt-10 bg-white shadow p-8 rounded">
-      <h2 className="text-2xl font-bold mb-6">Add New Property</h2>
+    <section className="max-w-6xl mx-auto mt-25 ">
+      <h2 className="text-4xl text-center font-bold mb-15">Add New Property</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 bg-secondary shadow p-8 rounded-2xl"
+      >
         {/* Property Title */}
         <div>
           <label className="block mb-1 font-medium">Property Title</label>
@@ -133,7 +138,7 @@ const AddProperty = () => {
             type="text"
             value={user?.displayName || ""}
             readOnly
-            className="w-full border px-3 py-2 rounded bg-gray-100"
+            className="w-full border px-3 py-2 rounded bg-secondary"
           />
         </div>
 
@@ -143,13 +148,13 @@ const AddProperty = () => {
             type="email"
             value={user?.email || ""}
             readOnly
-            className="w-full border px-3 py-2 rounded bg-gray-100"
+            className="w-full border px-3 py-2 rounded bg-secondary"
           />
         </div>
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           Add Property
         </button>

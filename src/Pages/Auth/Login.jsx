@@ -4,6 +4,8 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthContext";
 import { saveUserInDb } from "../../api/utils";
+import Lottie from "lottie-react";
+import loginAnimetion from "../../assets/Login Character Animation.json";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -80,20 +82,18 @@ const Login = () => {
   return (
     <div className="min-h-screen flex">
       {/* Left Side */}
-      <div className="w-1/2 bg-blue-600 text-white flex flex-col justify-center items-center p-8">
-        <h1 className="text-4xl font-bold mb-4">DreamHome Realty</h1>
-        <p className="text-lg">
-          Welcome back! Please login to explore and manage your dream
-          properties.
-        </p>
-        <p className="text-lg mt-2">
-          Find, Wishlist, and Buy verified properties hassle-free.
-        </p>
+
+      <div className=" hidden md:block ">
+        <Lottie
+          animationData={loginAnimetion}
+          loop={true}
+          className="w-100 h-100 lg:w-150 lg:h-150"
+        />
       </div>
 
       {/* Right Side */}
-      <div className="w-1/2 flex flex-col justify-center items-center p-8">
-        <div className="w-full max-w-md">
+      <div className="md:w-1/2 md:flex flex-col justify-center items-center p-8">
+        <div className="w-full max-w-md  p-10 rounded-2xl shadow-2xl">
           <h2 className="text-2xl font-bold text-center mb-6">
             Login to your account
           </h2>
@@ -130,29 +130,27 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+              className="w-full bg-primary text-white py-2 rounded hover:bg-blue-700"
             >
               Login
             </button>
-
-            <p className="text-center">
-              Don’t have an account?{" "}
-              <Link to="/register" className="text-blue-600 hover:underline">
-                Register
-              </Link>
-            </p>
           </form>
 
           {/* Optional: Social Login */}
-          <div className="mt-6 text-center">
-            <p>or login with</p>
+          <div className=" text-center">
             <button
               onClick={handleGoogleLogin}
-              className="mt-2 bg-red-500 text-white px-4 py-2 rounded"
+              className="mt-2 bg-primary w-full text-white px-4 py-2 rounded"
             >
-              Google
+              Login with Google
             </button>
           </div>
+          <p className="text-center mt-6">
+            Don’t have an account?{" "}
+            <Link to="/register" className="text-blue-600 hover:underline">
+              Register
+            </Link>
+          </p>
         </div>
       </div>
     </div>

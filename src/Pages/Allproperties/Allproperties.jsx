@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import Loader from "../Loader/Loader";
 
 const AllProperties = () => {
   const [searchLocation, setSearchLocation] = useState("");
@@ -23,7 +24,7 @@ const AllProperties = () => {
   });
 
   if (isLoading) {
-    return <div className="text-center py-10">Loading properties...</div>;
+    return <Loader></Loader>;
   }
 
   if (isError) {
@@ -39,13 +40,13 @@ const AllProperties = () => {
   );
 
   return (
-    <section className="max-w-7xl mx-auto py-10 px-4">
-      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+    <section className=" mx-auto my-25 ">
+      <h2 className="text-3xl font-bold mb-15 text-center text-gray-800">
         All Listed Properties
       </h2>
 
       {/* Search Input */}
-      <div className="mb-8 flex justify-center">
+      <div className="mb-15 flex justify-center">
         <input
           type="text"
           placeholder="🔍 Search by location..."
@@ -64,7 +65,7 @@ const AllProperties = () => {
           {filteredProperties.map((property) => (
             <div
               key={property._id}
-              className="bg-white shadow rounded overflow-hidden hover:shadow-lg transition flex flex-col"
+              className="bg-secondary shadow rounded overflow-hidden hover:shadow-lg transition flex flex-col"
             >
               <img
                 src={
@@ -111,7 +112,7 @@ const AllProperties = () => {
 
                 <button
                   onClick={() => navigate(`/property/${property._id}`)}
-                  className="mt-auto bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700 transition"
+                  className="mt-auto bg-primary text-white px-3 py-2 rounded hover:bg-blue-700 transition"
                 >
                   View Details
                 </button>

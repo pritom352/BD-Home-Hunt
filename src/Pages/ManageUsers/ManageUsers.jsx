@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-// import useAxiosSecure from "../hooks/useAxiosSecure";
+import Loader from "../Loader/Loader";
+import { toast } from "react-hot-toast";
 
 const fetchUsers = async (axiosSecure) => {
   const { data } = await axiosSecure.get("http://localhost:3000/users");
@@ -19,31 +20,50 @@ const ManageUsers = () => {
   const roleMutation = useMutation({
     mutationFn: ({ id, role }) =>
       axiosSecure.patch(`/user/${id}/role`, { role }),
-    onSuccess: () => queryClient.invalidateQueries(["users"]),
+    onSuccess: () => {
+      toast.success("✅ Role updated successfully");
+      queryClient.invalidateQueries(["users"]);
+    },
+    onError: (err) => {
+      console.error(err);
+      toast.error("❌ Failed to update role");
+    },
   });
 
   const fraudMutation = useMutation({
-    mutationFn: (id) =>
-      axiosSecure.patch(`http://localhost:3000/user/${id}/fraud`),
-    onSuccess: () => queryClient.invalidateQueries(["users"]),
+    mutationFn: (id) => axiosSecure.patch(`/user/${id}/fraud`),
+    onSuccess: () => {
+      toast.success("⚠️ User marked as fraud");
+      queryClient.invalidateQueries(["users"]);
+    },
+    onError: (err) => {
+      console.error(err);
+      toast.error("❌ Failed to mark as fraud");
+    },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => axiosSecure.delete(`http://localhost:3000/user/${id}`),
-    onSuccess: () => queryClient.invalidateQueries(["users"]),
+    mutationFn: (id) => axiosSecure.delete(`/user/${id}`),
+    onSuccess: () => {
+      console.log("🟢 Delete success triggered");
+      toast.success("🗑️ User deleted");
+      queryClient.invalidateQueries(["users"]);
+    },
+    onError: (err) => {
+      console.error(err);
+      toast.error("❌ Failed to delete user");
+    },
   });
 
-  if (isLoading) {
-    return <div className="text-center py-10">Loading users...</div>;
-  }
+  if (isLoading) return <Loader />;
 
   return (
-    <div className="max-w-5xl mx-auto py-10 px-4">
-      <h2 className="text-3xl font-bold mb-6 text-center">Manage Users</h2>
+    <div className="max-w-6xl mx-auto my-25">
+      <h2 className="text-4xl font-bold mb-15 text-center">Manage Users</h2>
 
       <div className="overflow-x-auto shadow rounded-lg">
         <table className="w-full text-sm text-left text-gray-600">
-          <thead className="text-xs uppercase bg-gray-100 text-gray-700">
+          <thead className="text-xs uppercase bg-secondary text-gray-700">
             <tr>
               <th className="px-6 py-3">Name</th>
               <th className="px-6 py-3">Email</th>
@@ -54,7 +74,7 @@ const ManageUsers = () => {
             {users.map((u) => (
               <tr
                 key={u._id}
-                className="bg-white border-b hover:bg-gray-50 transition"
+                className="bg-secondary border-b hover:bg-gray-50 transition"
               >
                 <td className="px-6 py-4">{u.name}</td>
                 <td className="px-6 py-4">{u.email}</td>

@@ -8,8 +8,8 @@ const AdvertisementSection = () => {
   // console.log("AdvertisementSection render");
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">
+    <div className="container mx-auto  mt-25">
+      <h1 className="text-4xl text-center mb-15 font-bold text-gray-800 ">
         Find Your Dream Home
       </h1>
 

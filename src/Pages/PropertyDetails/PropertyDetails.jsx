@@ -3,6 +3,8 @@ import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import Loader from "../Loader/Loader";
 
 const PropertyDetails = () => {
   const { user } = useContext(AuthContext);
@@ -48,9 +50,9 @@ const PropertyDetails = () => {
         userEmail: user?.email,
       });
       if (res.status === 201) {
-        setWishlistMsg("✅ Added to Wishlist!");
+        toast.success("✅ Added to Wishlist!");
       } else {
-        setWishlistMsg("❌ Failed to add to Wishlist.");
+        toast.error("❌ Failed to add to Wishlist.");
       }
     } catch (err) {
       if (err.response?.status === 409) {
@@ -89,19 +91,19 @@ const PropertyDetails = () => {
     }
   };
 
-  if (propertyLoading) return <p className="text-center mt-8">Loading...</p>;
+  if (propertyLoading) return <Loader></Loader>;
   if (propertyError)
     return <p className="text-center mt-8">Error loading property</p>;
   if (!property) return <p className="text-center mt-8">Property not found</p>;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6">
-      <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
+    <div className="max-w-6xl mx-auto  my-25">
+      <h1 className="text-4xl font-bold text-center text-gray-800 mb-15">
         🏡 Property Details
       </h1>
 
       {/* Property Display */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row gap-6">
+      <div className="bg-secondary rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row gap-6">
         <div className="md:w-2/3 overflow-hidden">
           <img
             src={selectedImage}
@@ -156,10 +158,10 @@ const PropertyDetails = () => {
       </div>
 
       {/* Agent Info */}
-      <h2 className="text-2xl font-semibold text-gray-700 mt-10">
+      <h2 className="text-4xl text-center mb-15 font-semibold text-gray-700 mt-25">
         👨‍💼 Agent Information
       </h2>
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-secondary rounded-xl shadow-lg overflow-hidden p-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <img
             src={property.agentImage || "https://i.pravatar.cc/100"}
@@ -186,7 +188,7 @@ const PropertyDetails = () => {
       </div>
 
       {/* Reviews Section */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden p-6 mt-6 space-y-4">
+      <div className="bg-secondary rounded-xl shadow-lg overflow-hidden p-6 mt-6 space-y-4">
         <h3 className="text-2xl font-semibold">📋 Reviews</h3>
         {reviewsLoading ? (
           <p>Loading reviews...</p>

@@ -2,6 +2,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+import Loader from "../Loader/Loader";
 
 const fetchProperty = async (id) => {
   const { data } = await axios.get(`http://localhost:3000/property/${id}`);
@@ -49,11 +51,13 @@ const UpdateProperty = () => {
   const mutation = useMutation({
     mutationFn: (updatedData) => updateProperty({ id, updatedData }),
     onSuccess: () => {
+      toast.success("Property update successfull");
       navigate("/my-properties");
     },
   });
 
-  if (isLoading) return <div>Loading property...</div>;
+  if (isLoading) return <Loader></Loader>;
+  toast.error("error loading property");
   if (isError) return <div>Error loading property</div>;
 
   const handleChange = (e) => {
@@ -73,11 +77,10 @@ const UpdateProperty = () => {
 
     mutation.mutate(updated);
   };
-  console.log(formData);
 
   return (
-    <div className="max-w-xl mx-auto py-10">
-      <h2 className="text-2xl font-bold mb-6">Update Property</h2>
+    <div className="max-w-6xl mx-auto mt-25">
+      <h2 className="text-4xl font-bold mb-15 text-center">Update Property</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Title */}
@@ -142,7 +145,7 @@ const UpdateProperty = () => {
         <button
           type="submit"
           disabled={mutation.isLoading}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           {mutation.isLoading ? "Updating..." : "Update Property"}
         </button>

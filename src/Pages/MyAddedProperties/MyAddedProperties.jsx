@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Link } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import Loader from "../Loader/Loader";
 
 const MyAddedProperties = () => {
   const { user } = useContext(AuthContext);
@@ -41,12 +42,12 @@ const MyAddedProperties = () => {
     }
   };
 
-  if (isLoading) return <div className="text-center py-10">Loading...</div>;
+  if (isLoading) return <Loader></Loader>;
   if (isError) return <div className="text-center py-10">Failed to fetch.</div>;
 
   return (
-    <section className="max-w-7xl mx-auto py-10 px-4">
-      <h2 className="text-3xl font-bold mb-6 text-center">
+    <section className="max-w-6xl mx-auto mt-25 ">
+      <h2 className="text-3xl font-bold mb-15 text-center">
         My Added Properties
       </h2>
 
@@ -54,7 +55,7 @@ const MyAddedProperties = () => {
         {properties.map((property) => (
           <div
             key={property._id}
-            className="bg-white shadow rounded p-4 flex flex-col"
+            className="bg-secondary shadow rounded p-4 flex flex-col"
           >
             <img
               src={
@@ -97,16 +98,15 @@ const MyAddedProperties = () => {
                 {property.verificationStatus || "pending"}
               </span>
 
-              <p>Price Range: {property.priceRange}</p>
-              <p>Min Price: {property.minPrice}</p>
-              <p>Max Price: {property.maxPrice}</p>
+              <p>Min Price: {property.priceRange?.split(" - ")[0]}</p>
+              <p>Max Price: {property.priceRange?.split(" - ")[1]}</p>
             </div>
 
             <div className="flex gap-2 mt-2">
               {property.verificationStatus !== "rejected" && (
                 <Link
                   to={`/dashboard/update-property/${property._id}`}
-                  className="flex-1 bg-blue-600 text-white px-3 py-1 rounded text-center hover:bg-blue-700"
+                  className="flex-1 bg-primary text-white px-3 py-1 rounded text-center hover:bg-blue-700"
                 >
                   Update
                 </Link>

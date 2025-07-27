@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Loader from "../Pages/Loader/Loader";
 
 const LatestReviews = () => {
   const {
@@ -15,8 +16,7 @@ const LatestReviews = () => {
     },
   });
 
-  if (isLoading)
-    return <div className="text-center py-10">Loading reviews...</div>;
+  if (isLoading) return <Loader></Loader>;
 
   if (isError)
     return (
@@ -26,8 +26,8 @@ const LatestReviews = () => {
     );
 
   return (
-    <section className="max-w-6xl mx-auto py-12 px-4">
-      <h2 className="text-4xl font-extrabold mb-10 text-center text-gray-800">
+    <section className=" mx-auto my-25 px-12">
+      <h2 className="text-4xl font-extrabold mb-15 text-center text-gray-800">
         🌟 Latest User Reviews
       </h2>
 
@@ -35,7 +35,7 @@ const LatestReviews = () => {
         {reviews.map((review) => (
           <div
             key={review._id}
-            className="relative bg-white rounded-xl shadow-md hover:shadow-xl border-t-4 border-blue-500 hover:border-blue-600 transition duration-300 flex flex-col"
+            className="relative bg-secondary rounded-xl shadow-md hover:shadow-xl border-t-4 border-blue-500 hover:border-blue-600 transition duration-300 flex flex-col"
           >
             <div className="p-6 flex flex-col flex-1">
               <div className="flex items-center gap-3 mb-4">
@@ -68,7 +68,7 @@ const LatestReviews = () => {
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-3 bg-gray-50 text-right rounded-b-xl">
+            <div className="px-6 py-3 bg-secondary text-right rounded-b-xl">
               <span className="text-xs text-gray-400">
                 {new Date(review.createdAt).toLocaleDateString()}
               </span>

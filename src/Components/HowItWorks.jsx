@@ -29,17 +29,16 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="w-full bg-white py-24 px-6 md:px-10">
-      <div className="max-w-7xl mx-auto text-center">
-        <motion.h2
-          className="text-5xl font-bold text-gray-800 mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          🛠️ How It Works
-        </motion.h2>
-
+    <section className="w-full  mt-25">
+      <motion.h2
+        className="text-4xl text-center font-bold text-gray-800 mb-15"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        🛠️ How It Works
+      </motion.h2>
+      <div className="max-w-7xl bg-secondary py-24 px-6 md:px-10 mx-auto text-center rounded-2xl">
         <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-12">
           {steps.map((step, index) => (
             <React.Fragment key={step.title}>

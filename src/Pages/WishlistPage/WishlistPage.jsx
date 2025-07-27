@@ -3,6 +3,8 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router"; // corrected import
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import Loader from "../Loader/Loader";
 
 const fetchWishlist = async (email) => {
   const res = await axios.get(
@@ -19,7 +21,6 @@ const WishlistPage = () => {
   const { user } = useContext(AuthContext);
   const queryClient = useQueryClient();
 
-  // Fetch wishlist using React Query v5 object syntax
   const {
     data: wishlist = [],
     isLoading,
@@ -37,8 +38,7 @@ const WishlistPage = () => {
       queryClient.invalidateQueries({ queryKey: ["wishlist", user?.email] });
     },
     onError: (error) => {
-      alert("Failed to remove item. Try again.");
-      console.error(error);
+      toast.error(error);
     },
   });
 
@@ -46,10 +46,11 @@ const WishlistPage = () => {
     mutation.mutate(id);
   };
 
-  if (isLoading) return <p className="text-center mt-8">Loading...</p>;
+  if (isLoading) return <Loader></Loader>;
   if (isError)
     return (
-      <p className="text-center mt-8 text-red-600">Error loading wishlist.</p>
+      toast.error("Error. try again"),
+      (<p className="text-center mt-8 text-red-600">Error loading wishlist.</p>)
     );
   if (wishlist.length === 0)
     return (
@@ -57,14 +58,14 @@ const WishlistPage = () => {
     );
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6">
-      <h1 className="text-3xl font-bold text-center mb-6">❤️ My Wishlist</h1>
+    <div className="max-w-6xl mx-auto  mt-25">
+      <h1 className="text-3xl font-bold text-center mb-15">❤️ My Wishlist</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {wishlist.map((item) => (
           <div
             key={item._id}
-            className="bg-white shadow rounded-lg overflow-hidden"
+            className="bg-secondary shadow rounded-lg overflow-hidden"
           >
             <img
               src={item.propertyImage}
@@ -98,7 +99,7 @@ const WishlistPage = () => {
 
               <div className="flex justify-between mt-4">
                 <Link to={`/dashboard/makeOffer/${item.propertyId}`}>
-                  <button className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+                  <button className="px-3 py-1 bg-primary text-white rounded hover:bg-blue-700">
                     📝 Make an Offer
                   </button>
                 </Link>

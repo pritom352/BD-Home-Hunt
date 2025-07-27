@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import Loader from "../Loader/Loader";
 
 const AgentOffers = () => {
   const { user } = useContext(AuthContext);
@@ -39,16 +40,18 @@ const AgentOffers = () => {
     mutation.mutate({ id, propertyId, status });
   };
 
-  if (isLoading) return <p className="text-center py-6">Loading...</p>;
+  if (isLoading) return <Loader></Loader>;
   if (isError) return <p className="text-center py-6">Error loading offers.</p>;
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">📋 My Property Offers</h2>
+    <div className="max-w-6xl mx-auto my-25">
+      <h2 className="text-2xl font-bold mb-15 text-center">
+        📋 My Property Offers
+      </h2>
       <div className="overflow-x-auto">
         <table className="table-auto w-full border">
           <thead>
-            <tr className="bg-gray-200">
+            <tr className="bg-secondary">
               <th className="px-4 py-2">Property Title</th>
               <th className="px-4 py-2">Location</th>
               <th className="px-4 py-2">Buyer Email</th>
@@ -58,7 +61,7 @@ const AgentOffers = () => {
               <th className="px-4 py-2">Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className=" bg-secondary">
             {offers.map((offer) => (
               <tr key={offer._id} className="border-t">
                 <td className="px-4 py-2">
@@ -82,7 +85,7 @@ const AgentOffers = () => {
                             "accepted"
                           )
                         }
-                        className="px-3 py-1 bg-green-500 text-white rounded"
+                        className="px-3 py-1 bg-primary text-white rounded"
                       >
                         Accept
                       </button>

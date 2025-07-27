@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Link } from "react-router";
+import { Link } from "react-router"; // ✅ Corrected import
 
 const PropertyCard = ({ property }) => {
   const controls = useAnimation();
@@ -15,7 +15,7 @@ const PropertyCard = ({ property }) => {
   }, [inView, controls]);
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+    <div className="bg-secondary rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
       {/* Image Section */}
       <div ref={ref} className="overflow-hidden relative group">
         <motion.img
@@ -32,7 +32,7 @@ const PropertyCard = ({ property }) => {
           }}
         />
 
-        {/* Sliding bar */}
+        {/* Sliding overlay */}
         <motion.div
           className="absolute top-0 left-0 h-full w-full bg-white/30"
           initial={{ x: "-100%" }}
@@ -57,7 +57,7 @@ const PropertyCard = ({ property }) => {
       </div>
 
       {/* Card Content */}
-      <div className="p-4 space-y-1">
+      <div className="p-4 space-y-1 flex-1">
         {/* Price Range */}
         <motion.p
           className="text-2xl font-bold text-green-600"
@@ -81,19 +81,20 @@ const PropertyCard = ({ property }) => {
 
         {/* Location */}
         <motion.p
-          className="text-sm text-gray-500 flex items-center gap-1"
+          className="text-sm text-gray-500 flex items-center gap-2"
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300, delay: 0.15 }}
         >
-          <FaMapMarkerAlt className="text-red-500" />
+          <FaMapMarkerAlt className="text-red-500 text-base" />
           {property.location}
         </motion.p>
       </div>
 
-      <div className="px-4 pb-4">
-        <Link to={`property/${property._id}`}>
+      {/* View Details Button */}
+      <div className="px-4 pb-4 mt-auto">
+        <Link to={`/property/${property._id}`}>
           <button className="w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-700 transition">
             View Details
           </button>

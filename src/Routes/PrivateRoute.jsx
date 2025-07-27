@@ -4,9 +4,9 @@ import { AuthContext } from "../context/AuthContext";
 import Loader from "../Pages/Loader/Loader";
 
 const PrivateRoute = ({ children }) => {
-  const { user, loading } = useContext(AuthContext);
+  const { user, loader } = useContext(AuthContext);
 
-  if (loading) return <Loader></Loader>;
+  if (!loader) return <Loader></Loader>;
   if (user) return children;
   return <Navigate to="/login" />;
 };

@@ -4,6 +4,9 @@ import { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthContext";
 import { saveUserInDb } from "../../api/utils";
+import Lottie from "lottie-react";
+import loginAnimetion from "../../assets/Registration animation.json";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const { register, updateUser, googleLogin, setUser } =
@@ -17,10 +20,10 @@ const Register = () => {
     const password = e.target.currentPassword.value;
     const photo = e.target.photoURL.value;
 
-    const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
     if (!passwordRegExp.test(password)) {
-      alert(
-        "Password must be at least six characters including one uppercase and one lowercase."
+      toast.error(
+        "Password must be at least 6 characters long and include one uppercase letter and one special character."
       );
       return;
     }
@@ -93,17 +96,17 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center">
       {/* Left Side */}
-      <div className="w-1/2 h-screen bg-green-600 text-white flex flex-col justify-center items-center p-8">
-        <h1 className="text-4xl font-bold mb-4">DreamHome Realty</h1>
-        <p className="text-lg">Join us and find your dream home today!</p>
-        <p className="text-lg mt-2">
-          Register to wishlist, review, and buy verified properties.
-        </p>
+
+      <div className=" hidden md:block ">
+        <Lottie
+          animationData={loginAnimetion}
+          className="w-100 h-100 lg:w-150 lg:h-150"
+        />
       </div>
 
       {/* Right Side */}
-      <div className="card w-full max-w-sm shrink-0 shadow-2xl mx-auto mt-20 border h-fit">
-        <h2 className="text-3xl font-bold mx-auto mt-3 text-fuchsia-300 text-shadow-lg">
+      <div className="card w-full max-w-sm shrink-0 shadow-2xl mx-auto mt-20  h-fit">
+        <h2 className="text-3xl font-bold mx-auto mt-3  text-shadow-lg">
           Register <span className="text-black">Now</span>
         </h2>
         <div className="card-body">
@@ -148,7 +151,7 @@ const Register = () => {
               />
             </div>
 
-            <button className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group w-full mt-2">
+            <button className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-primary group w-full mt-2">
               <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-blue-400 group-hover:h-full"></span>
               <span className="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
                 <svg
@@ -190,7 +193,7 @@ const Register = () => {
 
           <button
             onClick={handleGoogleLogin}
-            className="btn gap-3 rounded-md bg-black text-white font-semibold py-2.5 hover:bg-blue-400 hover:border-none hover:font-bold mt-3"
+            className="btn gap-3 rounded-md bg-primary text-white font-semibold py-2.5 hover:bg-blue-400 hover:border-none hover:font-bold mt-3"
           >
             Login With Google
           </button>

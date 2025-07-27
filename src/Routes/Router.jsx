@@ -19,16 +19,19 @@ import ManageUsers from "../Pages/ManageUsers/ManageUsers";
 import ManageReviews from "../Pages/ManageReviews/ManageReviews";
 import AgentOffers from "../Pages/AgentOffers/AgentOffers";
 import PropertyBought from "../Pages/PropertyBought/PropertyBought";
+import Loader from "../Pages/Loader/Loader";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    hydrateFallbackElement: <Loader></Loader>,
     children: [
       {
         index: true,
         element: <Home />,
         loader: () => fetch("http://localhost:3000/property"),
+        hydrateFallbackElement: <Loader></Loader>,
       },
       {
         path: "allPropertie",
