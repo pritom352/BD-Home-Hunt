@@ -23,7 +23,9 @@ const PropertyDetails = () => {
   } = useQuery({
     queryKey: ["property", id],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:3000/property/${id}`);
+      const { data } = await axios.get(
+        `https://assignment12-server-lyart.vercel.app/property/${id}`
+      );
       setSelectedImage(data.image || data.images?.[0]);
       return data;
     },
@@ -37,7 +39,9 @@ const PropertyDetails = () => {
   } = useQuery({
     queryKey: ["reviews", id],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:3000/reviews`);
+      const { data } = await axios.get(
+        `https://assignment12-server-lyart.vercel.app/reviews`
+      );
       return data.filter((review) => review.propertyId === id);
     },
   });
@@ -45,10 +49,13 @@ const PropertyDetails = () => {
   // Handle Wishlist
   const handleAddToWishlist = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/wishlist", {
-        propertyId: id,
-        userEmail: user?.email,
-      });
+      const res = await axios.post(
+        "https://assignment12-server-lyart.vercel.app/wishlist",
+        {
+          propertyId: id,
+          userEmail: user?.email,
+        }
+      );
       if (res.status === 201) {
         toast.success("✅ Added to Wishlist!");
       } else {
@@ -78,7 +85,10 @@ const PropertyDetails = () => {
     };
 
     try {
-      const res = await axios.post(`http://localhost:3000/reviews`, review);
+      const res = await axios.post(
+        `https://assignment12-server-lyart.vercel.app/reviews`,
+        review
+      );
       if (res.status === 201 || res.status === 200) {
         refetchReviews();
         setReviewText("");
@@ -158,7 +168,7 @@ const PropertyDetails = () => {
       </div>
 
       {/* Agent Info */}
-      <h2 className="text-4xl text-center mb-15 font-semibold text-gray-700 mt-25">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl text-center mb-15 font-semibold  mt-25">
         👨‍💼 Agent Information
       </h2>
       <div className="bg-secondary rounded-xl shadow-lg overflow-hidden p-6 flex flex-col md:flex-row items-center justify-between gap-4">

@@ -6,6 +6,7 @@ import Loader from "../Loader/Loader";
 
 const AllProperties = () => {
   const [searchLocation, setSearchLocation] = useState("");
+  const [sortOrder, setSortOrder] = useState("default"); // new state for sorting
   const navigate = useNavigate();
 
   const {
@@ -17,16 +18,13 @@ const AllProperties = () => {
     queryKey: ["verifiedProperties"],
     queryFn: async () => {
       const res = await axios.get(
-        "http://localhost:3000/property?verifiedOnly=true"
+        "https://assignment12-server-lyart.vercel.app/property?verifiedOnly=true"
       );
       return res.data;
     },
   });
 
-  if (isLoading) {
-    return <Loader></Loader>;
-  }
-
+  if (isLoading) return <Loader />;
   if (isError) {
     return (
       <div className="text-center py-10 text-red-500">
@@ -35,28 +33,50 @@ const AllProperties = () => {
     );
   }
 
-  const filteredProperties = properties.filter((property) =>
-    property.location?.toLowerCase().includes(searchLocation.toLowerCase())
+  // Filter by location
+  let filteredProperties = properties?.filter((property) =>
+    (property?.location || "")
+      .toLowerCase()
+      .includes(searchLocation.toLowerCase())
   );
 
+  // Sort by price range (ascending or descending)
+  if (sortOrder !== "default") {
+    filteredProperties.sort((a, b) => {
+      const priceA = parseInt(a.priceRange.replace(/[^\d]/g, ""));
+      const priceB = parseInt(b.priceRange.replace(/[^\d]/g, ""));
+      return sortOrder === "asc" ? priceA - priceB : priceB - priceA;
+    });
+  }
+
   return (
-    <section className=" mx-auto my-25 ">
-      <h2 className="text-3xl font-bold mb-15 text-center text-gray-800">
+    <section className="mx-auto my-25">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-10 text-center ">
         All Listed Properties
       </h2>
 
-      {/* Search Input */}
-      <div className="mb-15 flex justify-center">
+      {/* Search & Sort Controls */}
+      <div className="mb-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
         <input
           type="text"
           placeholder="🔍 Search by location..."
           value={searchLocation}
           onChange={(e) => setSearchLocation(e.target.value)}
-          className="w-full sm:w-[400px] px-5 py-3 rounded-full border border-gray-300 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          className="w-full sm:w-[300px] px-4 py-2 rounded-full border border-gray-300 shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
+
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="px-4 py-2 rounded-full border border-gray-300 shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        >
+          <option value="default">🔀 Sort by Price</option>
+          <option value="asc">⬆️ Low to High</option>
+          <option value="desc">⬇️ High to Low</option>
+        </select>
       </div>
 
-      {filteredProperties.length === 0 ? (
+      {filteredProperties?.length === 0 ? (
         <p className="text-center text-gray-500">
           No verified properties found for this location.
         </p>
@@ -82,7 +102,7 @@ const AllProperties = () => {
                   Title: {property.title}
                 </h3>
                 <p className="text-gray-600">
-                  <span className=" font-bold">Location: </span>
+                  <span className="font-bold">Location: </span>
                   {property.location}
                 </p>
 

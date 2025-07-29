@@ -31,7 +31,7 @@ export default function HowItWorks() {
   return (
     <section className="w-full  mt-25">
       <motion.h2
-        className="text-4xl text-center font-bold text-gray-800 mb-15"
+        className=" text-2xl md:text-3xl lg:text-4xl text-center font-bold  mb-15"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -56,7 +56,6 @@ export default function HowItWorks() {
                 </p>
               </motion.div>
 
-              {/* Arrows between steps (hidden on small screens) */}
               {index < steps.length - 1 && (
                 <ArrowRight
                   size={40}

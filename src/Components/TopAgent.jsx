@@ -13,7 +13,7 @@ export default function TopAgent() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/top-agent")
+      .get("https://assignment12-server-lyart.vercel.app/top-agent")
       .then((res) => setAgent(res.data))
       .catch(() => setError("Failed to load top agent"))
       .finally(() => setLoading(false));
@@ -35,11 +35,10 @@ export default function TopAgent() {
 
   return (
     <div className="mt-25">
-      <h1 className="text-4xl text-center font-bold text-gray-800 mb-15 ">
-        Agent
+      <h1 className="text-2xl md:text-3xl lg:text-4xl text-center font-bold  mb-15 ">
+        Top Agent
       </h1>
       <div className="w-full   flex items-center justify-center ">
-        {/* <Toaster position="top-center" reverseOrder={false} /> */}
         <div>
           <motion.div
             initial={{ opacity: 0, y: 60 }}

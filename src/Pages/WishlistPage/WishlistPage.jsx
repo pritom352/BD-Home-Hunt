@@ -5,20 +5,26 @@ import { Link } from "react-router"; // corrected import
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Loader from "../Loader/Loader";
+import useRole from "../../hooks/useRole";
 
 const fetchWishlist = async (email) => {
   const res = await axios.get(
-    `http://localhost:3000/wishlist?userEmail=${email}`
+    `https://assignment12-server-lyart.vercel.app/wishlist?userEmail=${email}`
   );
   return res.data;
 };
 
 const deleteWishlistItem = async (id) => {
-  await axios.delete(`http://localhost:3000/wishlist/${id}`);
+  await axios.delete(
+    `https://assignment12-server-lyart.vercel.app/wishlist/${id}`
+  );
 };
 
 const WishlistPage = () => {
   const { user } = useContext(AuthContext);
+
+  const [role, isRoleLoading] = useRole();
+
   const queryClient = useQueryClient();
 
   const {
@@ -56,10 +62,12 @@ const WishlistPage = () => {
     return (
       <p className="text-center text-gray-500 mt-8">No items in wishlist.</p>
     );
-
+  if (isRoleLoading) return <Loader />;
   return (
     <div className="max-w-6xl mx-auto  mt-25">
-      <h1 className="text-3xl font-bold text-center mb-15">❤️ My Wishlist</h1>
+      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-15">
+        ❤️ My Wishlist
+      </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {wishlist.map((item) => (
@@ -98,11 +106,17 @@ const WishlistPage = () => {
               </p>
 
               <div className="flex justify-between mt-4">
-                <Link to={`/dashboard/makeOffer/${item.propertyId}`}>
-                  <button className="px-3 py-1 bg-primary text-white rounded hover:bg-blue-700">
-                    📝 Make an Offer
-                  </button>
-                </Link>
+                {role === "customer" ? (
+                  <Link to={`/dashboard/makeOffer/${item.propertyId}`}>
+                    <button className="px-3 py-1 bg-primary text-white rounded hover:bg-blue-700">
+                      📝 Make an Offer
+                    </button>
+                  </Link>
+                ) : (
+                  <p className=" text-red-500">
+                    Only customer can buy property
+                  </p>
+                )}
                 <button
                   onClick={() => handleRemove(item._id)}
                   disabled={mutation.isLoading}

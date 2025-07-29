@@ -37,7 +37,7 @@ const AddProperty = () => {
       };
 
       const { data } = await axios.post(
-        "http://localhost:3000/add-property",
+        "https://assignment12-server-lyart.vercel.app/add-property",
         landData
       );
 
@@ -51,7 +51,9 @@ const AddProperty = () => {
 
   return (
     <section className="max-w-6xl mx-auto mt-25 ">
-      <h2 className="text-4xl text-center font-bold mb-15">Add New Property</h2>
+      <h2 className="text-2xl md:text-3xl lg:text-4xl text-center font-bold mb-15">
+        Add New Property
+      </h2>
 
       <form
         onSubmit={handleSubmit}

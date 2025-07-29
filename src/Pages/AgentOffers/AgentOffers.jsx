@@ -18,7 +18,7 @@ const AgentOffers = () => {
     queryFn: async ({ queryKey }) => {
       const email = queryKey[1];
       const res = await axios.get(
-        `http://localhost:3000/agent-offers?agentEmail=${email}`
+        `https://assignment12-server-lyart.vercel.app/agent-offers?agentEmail=${email}`
       );
       return res.data;
     },
@@ -26,10 +26,13 @@ const AgentOffers = () => {
 
   const mutation = useMutation({
     mutationFn: async ({ id, propertyId, status }) => {
-      await axios.patch(`http://localhost:3000/offers/${id}/status`, {
-        propertyId,
-        status,
-      });
+      await axios.patch(
+        `https://assignment12-server-lyart.vercel.app/offers/${id}/status`,
+        {
+          propertyId,
+          status,
+        }
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["agentOffers", user?.email] });
@@ -45,7 +48,7 @@ const AgentOffers = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-25">
-      <h2 className="text-2xl font-bold mb-15 text-center">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
         📋 My Property Offers
       </h2>
       <div className="overflow-x-auto">

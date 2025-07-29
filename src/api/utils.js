@@ -14,6 +14,8 @@ export const imageUpload = async (imageData) => {
 
 //save or update user in db
 export const saveUserInDb = async (user) => {
-  const { data } = await axios.post(`http://localhost:3000/user`, user);
-  console.log(data);
+  const { data } = await axios.post(
+    `https://assignment12-server-lyart.vercel.app/user`,
+    user
+  );
 };

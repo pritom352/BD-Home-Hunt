@@ -5,11 +5,9 @@ import PropertyCard from "./PropertyCard";
 const AdvertisementSection = () => {
   const properties = useLoaderData();
 
-  // console.log("AdvertisementSection render");
-
   return (
     <div className="container mx-auto  mt-25">
-      <h1 className="text-4xl text-center mb-15 font-bold text-gray-800 ">
+      <h1 className="text-2xl md:text-3xl lg:text-4xl text-center mb-15 font-bold ">
         Find Your Dream Home
       </h1>
 

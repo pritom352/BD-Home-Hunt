@@ -14,16 +14,21 @@ const ManageProperties = () => {
   } = useQuery({
     queryKey: ["properties"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/propertys");
+      const res = await axios.get(
+        "https://assignment12-server-lyart.vercel.app/propertys"
+      );
       return res.data;
     },
   });
 
   const mutation = useMutation({
     mutationFn: async ({ id, status }) => {
-      await axios.patch(`http://localhost:3000/property/${id}/status`, {
-        verificationStatus: status,
-      });
+      await axios.patch(
+        `https://assignment12-server-lyart.vercel.app/property/${id}/status`,
+        {
+          verificationStatus: status,
+        }
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["properties"] });
@@ -45,7 +50,7 @@ const ManageProperties = () => {
 
   return (
     <section className="max-w-6xl mx-auto  my-25">
-      <h2 className="text-4xl font-bold text-center mb-15">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-15">
         Manage Properties
       </h2>
       <table className="w-full  ">

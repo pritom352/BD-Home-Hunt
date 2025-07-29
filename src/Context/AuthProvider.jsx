@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
 
         // Get JWT token
         await axios.post(
-          `http://localhost:3000/jwt`,
+          `https://assignment12-server-lyart.vercel.app/jwt`,
           {
             email: currentUser?.email,
           },
@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
         );
       } else {
         setUser(currentUser);
-        await axios.get(`http://localhost:3000/logout`, {
+        await axios.get(`https://assignment12-server-lyart.vercel.app/logout`, {
           withCredentials: true,
         });
       }

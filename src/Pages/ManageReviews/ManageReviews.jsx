@@ -3,7 +3,9 @@ import axios from "axios";
 import Loader from "../Loader/Loader";
 
 const fetchReviews = async () => {
-  const { data } = await axios.get("http://localhost:3000/reviews/all");
+  const { data } = await axios.get(
+    "https://assignment12-server-lyart.vercel.app/reviews/all"
+  );
   return data;
 };
 
@@ -17,7 +19,9 @@ const ManageReviews = () => {
 
   const deleteMutation = useMutation({
     mutationFn: (id) =>
-      axios.delete(`http://localhost:3000/adminReviews/${id}`),
+      axios.delete(
+        `https://assignment12-server-lyart.vercel.app/adminReviews/${id}`
+      ),
     onSuccess: () => queryClient.invalidateQueries(["reviews"]),
   });
 
@@ -25,7 +29,7 @@ const ManageReviews = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-25   ">
-      <h2 className="text-4xl sm:text-3xl font-bold mb-15 text-center">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
         Manage Reviews
       </h2>
 

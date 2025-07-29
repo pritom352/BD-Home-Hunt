@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 
 export const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://assignment12-server-lyart.vercel.app",
   withCredentials: true,
 });
 
@@ -18,7 +18,6 @@ const useAxiosSecure = () => {
         return res;
       },
       async (error) => {
-        console.log("Error caught from axios interceptor-->", error.response);
         if (error.response.status === 401 || error.response.status === 403) {
           // logout
           logOut();

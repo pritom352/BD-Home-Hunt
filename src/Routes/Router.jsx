@@ -20,17 +20,21 @@ import ManageReviews from "../Pages/ManageReviews/ManageReviews";
 import AgentOffers from "../Pages/AgentOffers/AgentOffers";
 import PropertyBought from "../Pages/PropertyBought/PropertyBought";
 import Loader from "../Pages/Loader/Loader";
+import MySoldProperties from "../Pages/MySoldProperties/MySoldProperties";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     hydrateFallbackElement: <Loader></Loader>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
         element: <Home />,
-        loader: () => fetch("http://localhost:3000/property"),
+        loader: () =>
+          fetch("https://assignment12-server-lyart.vercel.app/property"),
         hydrateFallbackElement: <Loader></Loader>,
       },
       {
@@ -56,7 +60,7 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </PrivateRoute>
     ),
-
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "addProperty",
@@ -148,6 +152,14 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "mySoldProperties",
+        element: (
+          <PrivateRoute>
+            <MySoldProperties></MySoldProperties>
+          </PrivateRoute>
+        ),
+      },
 
       {
         path: "manage-properties",
@@ -159,6 +171,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: "*", element: <ErrorPage></ErrorPage> },
 ]);
 
 export default router;

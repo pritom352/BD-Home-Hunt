@@ -11,7 +11,9 @@ const LatestReviews = () => {
   } = useQuery({
     queryKey: ["latestReviews"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/reviews/latest");
+      const res = await axios.get(
+        "https://assignment12-server-lyart.vercel.app/reviews/latest"
+      );
       return res.data;
     },
   });
@@ -27,7 +29,7 @@ const LatestReviews = () => {
 
   return (
     <section className=" mx-auto my-25 px-12">
-      <h2 className="text-4xl font-extrabold mb-15 text-center text-gray-800">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold mb-15 text-center ">
         🌟 Latest User Reviews
       </h2>
 

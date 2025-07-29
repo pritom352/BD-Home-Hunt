@@ -18,7 +18,7 @@ const MyAddedProperties = () => {
     queryFn: async ({ queryKey }) => {
       const email = queryKey[1];
       const res = await axios.get(
-        `http://localhost:3000/myProperty?agentEmail=${email}`
+        `https://assignment12-server-lyart.vercel.app/myProperty?agentEmail=${email}`
       );
       return res.data;
     },
@@ -27,7 +27,9 @@ const MyAddedProperties = () => {
 
   const mutation = useMutation({
     mutationFn: async (id) => {
-      await axios.delete(`http://localhost:3000/property/${id}`);
+      await axios.delete(
+        `https://assignment12-server-lyart.vercel.app/property/${id}`
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -47,7 +49,7 @@ const MyAddedProperties = () => {
 
   return (
     <section className="max-w-6xl mx-auto mt-25 ">
-      <h2 className="text-3xl font-bold mb-15 text-center">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
         My Added Properties
       </h2>
 

@@ -23,7 +23,9 @@ const MakeOfferPage = () => {
     queryKey: ["property", id],
     enabled: !!id,
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:3000/property/${id}`);
+      const res = await axios.get(
+        `https://assignment12-server-lyart.vercel.app/property/${id}`
+      );
       return res.data;
     },
   });
@@ -31,7 +33,10 @@ const MakeOfferPage = () => {
   //  Mutation to submit offer
   const offerMutation = useMutation({
     mutationFn: async (newOffer) => {
-      const res = await axios.post(`http://localhost:3000/offers`, newOffer);
+      const res = await axios.post(
+        `https://assignment12-server-lyart.vercel.app/offers`,
+        newOffer
+      );
       return res.data;
     },
     onSuccess: () => {
@@ -81,7 +86,7 @@ const MakeOfferPage = () => {
 
   return (
     <div className="max-w-lg mx-auto mt-10 bg-white p-6 rounded shadow space-y-4">
-      <h1 className="text-2xl font-bold text-center text-blue-800">
+      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center ">
         📝 Make an Offer
       </h1>
 

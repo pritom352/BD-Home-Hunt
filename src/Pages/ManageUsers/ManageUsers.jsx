@@ -4,7 +4,9 @@ import Loader from "../Loader/Loader";
 import { toast } from "react-hot-toast";
 
 const fetchUsers = async (axiosSecure) => {
-  const { data } = await axiosSecure.get("http://localhost:3000/users");
+  const { data } = await axiosSecure.get(
+    "https://assignment12-server-lyart.vercel.app/users"
+  );
   return data;
 };
 
@@ -45,7 +47,6 @@ const ManageUsers = () => {
   const deleteMutation = useMutation({
     mutationFn: (id) => axiosSecure.delete(`/user/${id}`),
     onSuccess: () => {
-      console.log("🟢 Delete success triggered");
       toast.success("🗑️ User deleted");
       queryClient.invalidateQueries(["users"]);
     },
@@ -59,7 +60,9 @@ const ManageUsers = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-25">
-      <h2 className="text-4xl font-bold mb-15 text-center">Manage Users</h2>
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
+        Manage Users
+      </h2>
 
       <div className="overflow-x-auto shadow rounded-lg">
         <table className="w-full text-sm text-left text-gray-600">

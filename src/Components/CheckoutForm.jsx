@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { AuthContext } from "../context/AuthContext";
 
-const CheckoutForm = ({ offer, onClose }) => {
+const CheckoutForm = ({ offer, onSuccess, onClose }) => {
   const stripe = useStripe();
   const elements = useElements();
   const queryClient = useQueryClient();
+  const { user } = useContext(AuthContext);
 
   const [clientSecret, setClientSecret] = useState("");
 
@@ -15,9 +17,12 @@ const CheckoutForm = ({ offer, onClose }) => {
   useEffect(() => {
     if (offer?.offerAmount) {
       axios
-        .post("http://localhost:3000/create-payment-intent", {
-          offerAmount: offer.offerAmount,
-        })
+        .post(
+          "https://assignment12-server-lyart.vercel.app/create-payment-intent",
+          {
+            offerAmount: offer.offerAmount,
+          }
+        )
         .then((res) => {
           setClientSecret(res.data.clientSecret);
         })
@@ -39,7 +44,7 @@ const CheckoutForm = ({ offer, onClose }) => {
     });
 
     if (error) {
-      console.error("[PaymentMethod Error]", error.message);
+      toast.error(`[PaymentMethod Error] ${error.message}`);
       return;
     }
 
@@ -50,7 +55,7 @@ const CheckoutForm = ({ offer, onClose }) => {
       });
 
     if (confirmError) {
-      toast.error("[Confirm Error]", confirmError.message);
+      toast.error(`[Confirm Error] ${confirmError.message}`);
     } else if (paymentIntent.status === "succeeded") {
       toast.success("✅ Payment Success!");
 
@@ -61,19 +66,31 @@ const CheckoutForm = ({ offer, onClose }) => {
         buyerEmail: offer.buyerEmail,
         agentName: offer.agentName,
         transactionId: paymentIntent.id,
+        agentEmail: offer.agentEmail,
+        buyerName: user.displayName,
+        propertyLocation: offer.propertyLocation,
       };
 
-      await axios.post("http://localhost:3000/payments", paymentData);
+      const res = await axios.post(
+        "https://assignment12-server-lyart.vercel.app/payments",
+        paymentData
+      );
+      const savedTransactionId = res.data?.result?.insertedId
+        ? paymentIntent.id
+        : null;
 
-      // STEP 5: Invalidate related queries
+      if (savedTransactionId && onSuccess) {
+        // STEP 5: Notify parent about success
+        onSuccess(savedTransactionId, offer._id); // ✅
+      }
+
+      // STEP 6: Invalidate related queries
       queryClient.invalidateQueries(["buyerOffers"]);
       queryClient.invalidateQueries(["allProperties"]);
       queryClient.invalidateQueries(["myOffers"]);
 
-      // STEP 6: Close modal
-      if (onClose) {
-        onClose();
-      }
+      // STEP 7: Close modal
+      if (onClose) onClose();
     }
   };
 

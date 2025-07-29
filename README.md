@@ -1,12 +1,54 @@
-# React + Vite
+# 🏠 BDHomeHunt - Real Estate Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack real estate web application built with the MERN stack (MongoDB, Express, React, Node.js). This platform allows users to explore, wishlist, and buy properties, while agents can add and manage listings, and admins maintain control over platform activities.
 
-Currently, two official plugins are available:
+## 🔗 Live Links
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Client**: [https://assignnment12.web.app/](https://assignnment12.web.app/)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Features
+
+### ✅ Authentication
+
+- Email/Password Login & Signup
+- Google Social Login
+- JWT-based secure route protection
+
+### 👥 Roles & Dashboards
+
+- **User Dashboard**: Wishlist, My Offers, Bought Properties, My Reviews
+- **Agent Dashboard**: Add/Edit/Delete Properties, Manage Offers
+- **Admin Dashboard**: Manage Users, Properties, Fraud Detection, Advertisements
+
+### 🏡 Properties
+
+- Property add/edit/delete (by agents)
+- Wishlist functionality (for users)
+- Make offer / accept offer
+- Property reviews
+
+### 💳 Payment Integration
+
+- Stripe integration for property purchasing
+- Successful payments update property status
+
+### 🔍 Extra Functionalities
+
+- Search by location (on All Properties page)
+- Sort by price range (ascending/descending)
+- Property filtering options
+- Protected routes based on user roles
+- Responsive design with dark/light toggle
+- Framer Motion animations
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React, Tailwind CSS, React Router, TanStack Query v5, Axios, Firebase Auth
+- **Backend**: Express.js, Node.js, MongoDB, Firebase Admin SDK, Stripe
+- **Others**: JWT, dotenv, react-icons, framer-motion
+
+---

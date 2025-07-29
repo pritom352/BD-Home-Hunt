@@ -6,12 +6,17 @@ import toast from "react-hot-toast";
 import Loader from "../Loader/Loader";
 
 const fetchProperty = async (id) => {
-  const { data } = await axios.get(`http://localhost:3000/property/${id}`);
+  const { data } = await axios.get(
+    `https://assignment12-server-lyart.vercel.app/property/${id}`
+  );
   return data;
 };
 
 const updateProperty = async ({ id, updatedData }) => {
-  await axios.put(`http://localhost:3000/myProperty/${id}`, updatedData);
+  await axios.put(
+    `https://assignment12-server-lyart.vercel.app/myProperty/${id}`,
+    updatedData
+  );
 };
 
 const UpdateProperty = () => {
@@ -52,12 +57,12 @@ const UpdateProperty = () => {
     mutationFn: (updatedData) => updateProperty({ id, updatedData }),
     onSuccess: () => {
       toast.success("Property update successfull");
-      navigate("/my-properties");
+      navigate("/dashboard/my-properties");
     },
   });
 
   if (isLoading) return <Loader></Loader>;
-  toast.error("error loading property");
+  // toast.error("error loading property");
   if (isError) return <div>Error loading property</div>;
 
   const handleChange = (e) => {
@@ -80,7 +85,9 @@ const UpdateProperty = () => {
 
   return (
     <div className="max-w-6xl mx-auto mt-25">
-      <h2 className="text-4xl font-bold mb-15 text-center">Update Property</h2>
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
+        Update Property
+      </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Title */}

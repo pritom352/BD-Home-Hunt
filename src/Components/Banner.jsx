@@ -2,11 +2,11 @@ import CountUp from "react-countup";
 
 const Banner = () => {
   return (
-    <section className="bg-white relative overflow-hidden w-full">
+    <section className="bg-white relative overflow-hidden w-full mt-25">
       <div className="flex flex-col md:flex-row w-full min-h-[400px]">
         {/* Left Part */}
         <div className="md:w-3/5 ml-20 bg-white p-8 md:p-12  flex md:-skew-x-6 z-10 flex-col justify-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
             Find your dream home <br />
             in the best location
           </h1>

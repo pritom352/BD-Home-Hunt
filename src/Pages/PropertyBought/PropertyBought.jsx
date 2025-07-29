@@ -15,13 +15,14 @@ const stripePromise = loadStripe(
 
 const fetchOffers = async (email) => {
   const { data } = await axios.get(
-    `http://localhost:3000/buyer-offers?buyerEmail=${email}`
+    `https://assignment12-server-lyart.vercel.app/buyer-offers?buyerEmail=${email}`
   );
   return data;
 };
 
 const PropertyBought = () => {
   const { user } = useContext(AuthContext);
+  const [transactionIds, setTransactionIds] = useState({});
   const [selectedOffer, setSelectedOffer] = useState(null);
 
   const {
@@ -45,7 +46,7 @@ const PropertyBought = () => {
 
   return (
     <div className="max-w-6xl mx-auto mt-25">
-      <h2 className="text-4xl text-center font-bold mb-15">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl text-center font-bold mb-15">
         🏠 Properties You Offered For
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -84,15 +85,18 @@ const PropertyBought = () => {
                 </span>
               </p>
 
-              {offer.status === "accepted" ||
-                (offer.status !== "bought" && (
-                  <button
-                    className="mt-2 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                    onClick={() => setSelectedOffer(offer)}
-                  >
-                    💳 Pay
-                  </button>
-                ))}
+              {transactionIds[offer._id] ? (
+                <p className="text-green-600 font-medium">
+                  Transaction ID: {transactionIds[offer._id]}
+                </p>
+              ) : offer.status === "accepted" ? (
+                <button
+                  className="mt-2 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  onClick={() => setSelectedOffer(offer)}
+                >
+                  💳 Pay
+                </button>
+              ) : null}
             </div>
           </div>
         ))}
@@ -109,7 +113,13 @@ const PropertyBought = () => {
               ×
             </button>
             <Elements stripe={stripePromise}>
-              <CheckoutForm offer={selectedOffer} />
+              <CheckoutForm
+                offer={selectedOffer}
+                onSuccess={(txnId, offerId) => {
+                  setTransactionIds((prev) => ({ ...prev, [offerId]: txnId }));
+                  setSelectedOffer(null); // modal close
+                }}
+              />
             </Elements>
           </div>
         </div>

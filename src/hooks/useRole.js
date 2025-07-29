@@ -15,7 +15,9 @@ const useRole = () => {
     queryKey: ["userRole", user?.email],
     queryFn: async () => {
       if (!user?.email) return null;
-      const { data } = await axiosSecure.get(`/user/role/${user.email}`);
+      const { data } = await axiosSecure.get(
+        `https://assignment12-server-lyart.vercel.app/user/role/${user.email}`
+      );
       return data?.role || null;
     },
     enabled: !!user?.email,

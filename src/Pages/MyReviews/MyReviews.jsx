@@ -19,7 +19,7 @@ const MyReviews = () => {
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:3000/reviews?userEmail=${user.email}`
+        `https://assignment12-server-lyart.vercel.app/reviews?userEmail=${user.email}`
       );
       return res.data;
     },
@@ -27,7 +27,9 @@ const MyReviews = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      await axios.delete(`http://localhost:3000/reviews/${id}`);
+      await axios.delete(
+        `https://assignment12-server-lyart.vercel.app/reviews/${id}`
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reviews", user?.email] });
@@ -44,7 +46,9 @@ const MyReviews = () => {
 
   return (
     <div className="max-w-6xl mx-auto mt-25  space-y-4">
-      <h1 className="text-4xl font-bold mb-15 text-center">📝 My Reviews</h1>
+      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
+        📝 My Reviews
+      </h1>
 
       {reviews.length === 0 && (
         <p className="text-center text-gray-500">No reviews found.</p>

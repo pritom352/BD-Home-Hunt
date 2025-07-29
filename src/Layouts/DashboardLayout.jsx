@@ -19,10 +19,6 @@ const DashboardLayout = () => {
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [role, isRoleLoading] = useRole();
-  // const { loader } = useContext(AuthContext);
-  // if (!loader) {
-  //   return <Loader></Loader>;
-  // }
 
   if (isRoleLoading) return <Loader />;
 
@@ -38,7 +34,7 @@ const DashboardLayout = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <div className="flex h-screen bg-accent overflow-hidden">
+      <div className="flex h-screen bg-accent overflow-hidden ">
         {/* Mobile Backdrop: Close sidebar if clicked outside */}
         {isSidebarOpen && (
           <div
@@ -103,6 +99,12 @@ const DashboardLayout = () => {
                       🏘️ My Properties
                     </Link>
                     <Link
+                      to="/dashboard/mySoldProperties"
+                      className={linkClasses("/dashboard/mySoldProperties")}
+                    >
+                      🏘️ My Sold Properties
+                    </Link>
+                    <Link
                       to="/dashboard/agentOffers"
                       className={linkClasses("/dashboard/agentOffers")}
                     >
@@ -139,9 +141,6 @@ const DashboardLayout = () => {
             </div>
 
             <div className="flex flex-col gap-2 pt-4 border-t mt-4">
-              {/* <button className="flex items-center gap-2 p-2 rounded hover:bg-blue-100">
-                <FaUser /> Profile
-              </button> */}
               <button className="flex items-center gap-2 p-2 rounded hover:bg-red-100 text-red-600">
                 <FaSignOutAlt /> Logout
               </button>
