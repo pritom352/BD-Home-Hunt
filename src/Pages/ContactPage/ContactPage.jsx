@@ -7,7 +7,7 @@ export default function ContactPage() {
       <div
         className="relative w-full h-[250px] sm:h-[300px] md:h-[400px] flex items-center justify-center text-center text-white"
         style={{
-          backgroundImage: `url('https://i.ibb.co/3yBrJRh/contact-banner.jpg')`,
+          backgroundImage: `url('https://www.benhams.com/news/wp-content/uploads/2024/08/Dream-work.jpg')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

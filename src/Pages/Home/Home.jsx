@@ -5,6 +5,7 @@ import AdvertisementSection from "../../Components/AdvertisementSection";
 import LatestReviews from "../../Components/LatestReviews";
 import TopAgent from "../../Components/TopAgent";
 import HowItWorks from "../../Components/HowItWorks";
+import WhyChooseUs from "../../Components/WhyChooseUs";
 
 const Home = () => {
   const properties = useLoaderData();
@@ -13,7 +14,8 @@ const Home = () => {
       <Banner></Banner>
       <AdvertisementSection properties={properties}></AdvertisementSection>
       <TopAgent></TopAgent>
-      <HowItWorks></HowItWorks>
+      {/* <HowItWorks></HowItWorks> */}
+      <WhyChooseUs></WhyChooseUs>
       <LatestReviews></LatestReviews>
     </div>
   );

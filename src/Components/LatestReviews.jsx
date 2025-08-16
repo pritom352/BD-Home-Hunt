@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "../Pages/Loader/Loader";
+import { Quote } from "lucide-react"; // for quotation icon
 
 const LatestReviews = () => {
   const {
@@ -18,8 +19,7 @@ const LatestReviews = () => {
     },
   });
 
-  if (isLoading) return <Loader></Loader>;
-
+  if (isLoading) return <Loader />;
   if (isError)
     return (
       <div className="text-center py-10 text-red-600">
@@ -28,52 +28,48 @@ const LatestReviews = () => {
     );
 
   return (
-    <section className=" mx-auto my-25 px-12">
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold mb-15 text-center ">
+    <section className="max-w-7xl mx-auto my-16 px-4 sm:px-6 lg:px-12">
+      {/* Title */}
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-10 text-center">
         🌟 Latest User Reviews
       </h2>
 
-      <div className="grid gap-8 md:grid-cols-3">
+      {/* Grid */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {reviews.map((review) => (
           <div
             key={review._id}
-            className="relative bg-secondary rounded-xl shadow-md hover:shadow-xl border-t-4 border-blue-500 hover:border-blue-600 transition duration-300 flex flex-col"
+            className="relative bg-secondary rounded-xl shadow-md hover:shadow-xl border-t-4 border-blue-500 hover:border-blue-600 transition duration-300 flex flex-col justify-between"
           >
-            <div className="p-6 flex flex-col flex-1">
-              <div className="flex items-center gap-3 mb-4">
+            {/* Comment */}
+            <div className="p-6">
+              <p className="text-gray-700 italic text-center text-base sm:text-lg">
+                “{review.comment}”
+              </p>
+            </div>
+
+            {/* User info + Quote */}
+            <div className="flex items-center justify-between px-6 py-4 bg-secondary rounded-b-xl">
+              <div className="flex items-center gap-3">
                 <img
                   src={
                     review.userImage ||
                     `https://i.pravatar.cc/100?u=${review.userEmail}`
                   }
                   alt={review.userName}
-                  className="w-14 h-14 rounded-full border-2 border-blue-500 shadow"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-blue-500 shadow"
                 />
                 <div>
-                  <p className="font-semibold text-lg">{review.userName}</p>
+                  <p className="font-semibold text-sm sm:text-base">
+                    {review.userName}
+                  </p>
                   <p className="text-xs text-gray-400">{review.userEmail}</p>
+                  <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs font-medium block mt-1">
+                    {review.propertyTitle || "Untitled Property"}
+                  </span>
                 </div>
               </div>
-
-              <p className="text-sm text-gray-700 mb-4">
-                <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
-                  {review.propertyTitle || "Untitled Property"}
-                </span>
-              </p>
-
-              {/* Review Description */}
-              <div className="flex-1 flex items-center justify-center">
-                <p className="text-gray-600 italic text-center overflow-auto break-words">
-                  “{review.comment}”
-                </p>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="px-6 py-3 bg-secondary text-right rounded-b-xl">
-              <span className="text-xs text-gray-400">
-                {new Date(review.createdAt).toLocaleDateString()}
-              </span>
+              <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 opacity-70" />
             </div>
           </div>
         ))}
