@@ -70,8 +70,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className="relative">
-      <div className="navbar bg-primary shadow-sm  sticky ">
+    <div className=" border border-red-500 bg-primary sticky top-0 z-50 ">
+      <div className="navbar  shadow-sm   border max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -98,7 +98,11 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <img className="  w-[60px] h-[60px] rounded-2xl " src={logo} alt="" />
+          <img
+            className="  w-[40px] h-[40px] rounded-2xl border "
+            src={logo}
+            alt=""
+          />
           <h1 className=" hidden md:block">BDHomeHunt</h1>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -133,7 +137,7 @@ const Navbar = () => {
           {user ? (
             <>
               <img
-                className=" w-[50px] h-[50px]   rounded-full mr-2"
+                className=" w-[40px] h-[40px] border  rounded-full mr-2"
                 src={user?.photoURL}
                 alt=""
               />
