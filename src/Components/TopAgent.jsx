@@ -30,123 +30,132 @@ export default function TopAgent() {
     setFormData({ userEmail: "", message: "" });
   };
 
-  if (loading) return <Loader></Loader>;
+  if (loading) return <Loader />;
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="mt-25">
-      <h1 className="text-2xl md:text-3xl lg:text-4xl text-center font-bold  mb-15 ">
-        Top Agent
+    <div className="mt-20 mb-20">
+      <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-12">
+        🌟 Top Agent of the Month
       </h1>
-      <div className="w-full   flex items-center justify-center ">
-        <div>
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="w-full max-w-6xl bg-secondary rounded-xl shadow-lg grid grid-cols-1 md:grid-cols-2 gap-10 p-10"
-          >
-            {/* Left Side - Image */}
-            <motion.div
-              whileHover="hover"
-              className="relative w-full h-[400px] overflow-hidden rounded-xl shadow-md"
-            >
-              <motion.img
-                src={agent.image}
-                alt={agent.name}
-                className="w-full h-full object-cover transition-all duration-300 rounded-xl"
-              />
-              <motion.div
-                variants={{ hover: { opacity: 1 }, initial: { opacity: 0 } }}
-                initial="initial"
-                className="absolute inset-0 bg-black bg-opacity-50 text-white flex flex-col items-center justify-center text-center px-4 transition-all duration-300"
-              >
-                <h2 className="text-2xl font-bold">{agent.name}</h2>
-                <p>{agent.email}</p>
-                <p>Total Properties: {agent.totalProperties}</p>
-              </motion.div>
-            </motion.div>
 
-            {/* Right Side - Info */}
-            <div className="flex flex-col justify-center space-y-4">
-              <h1 className="text-4xl font-bold text-gray-800">Agent</h1>
-              <p className="text-gray-700 text-lg">
+      <div className="flex justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2"
+        >
+          {/* Left - Agent Image */}
+          <div className="relative h-[400px] md:h-auto">
+            <img
+              src={agent.image}
+              alt={agent.name}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6 text-white">
+              <h2 className="text-2xl font-bold">{agent.name}</h2>
+              <p className="text-sm">{agent.email}</p>
+            </div>
+          </div>
+
+          {/* Right - Agent Info */}
+          <div className="flex flex-col justify-center p-8 space-y-6">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-800">
+                Meet {agent.name}
+              </h3>
+              <p className="text-gray-600 mt-2 text-base leading-relaxed">
                 Discover the top-rated agent of the month. This agent has earned
                 the trust of many clients through dedication, quick responses,
                 and excellent service.
               </p>
-              <ul className="text-gray-700 space-y-1 text-base">
-                <li>
-                  <strong>📧 Email:</strong> {agent.email}
-                </li>
-                <li>
-                  <strong>📝 Listings:</strong> {agent.totalProperties}
-                </li>
-                <li>
-                  <strong>🌟 Rating:</strong> 4.9/5 (Based on client reviews)
-                </li>
-                <li>
-                  <strong>📍 Location:</strong> Dhaka, Bangladesh
-                </li>
-              </ul>
-              <button
-                onClick={() => setShowModal(true)}
-                className="mt-6 px-6 py-3 rounded-lg bg-primary text-white hover:bg-blue-700 transition w-fit"
-              >
-                Contact Agent
-              </button>
             </div>
-          </motion.div>
-        </div>
 
-        {/* Modal */}
-        {showModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full relative"
+            <ul className="space-y-2 text-gray-700 text-base">
+              <li>
+                <strong>📧 Email:</strong> {agent.email}
+              </li>
+              <li>
+                <strong>📝 Listings:</strong> {agent.totalProperties}
+              </li>
+              <li>
+                <strong>🌟 Rating:</strong> 4.9/5 (Based on client reviews)
+              </li>
+              <li>
+                <strong>📍 Location:</strong> Dhaka, Bangladesh
+              </li>
+            </ul>
+
+            <button
+              onClick={() => setShowModal(true)}
+              className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition w-fit shadow"
             >
-              <button
-                onClick={() => setShowModal(false)}
-                className="absolute top-3 right-3 text-gray-500 hover:text-black text-2xl"
-              >
-                &times;
-              </button>
-              <h2 className="text-2xl font-semibold mb-3">
-                Contact {agent.name}
-              </h2>
-              <form onSubmit={handleFakeSubmit} className="space-y-4">
+              Contact Agent
+            </button>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-md w-full relative"
+          >
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl"
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-semibold mb-4">
+              Contact {agent.name}
+            </h2>
+            <form onSubmit={handleFakeSubmit} className="space-y-4">
+              <div>
+                <label className="text-sm font-medium text-gray-700">
+                  Your Email
+                </label>
                 <input
                   type="email"
-                  placeholder="Your Email"
+                  placeholder="Enter your email"
                   value={formData.userEmail}
                   onChange={(e) =>
                     setFormData({ ...formData, userEmail: e.target.value })
                   }
-                  className="w-full border border-gray-300 rounded-md p-3"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-1 focus:ring-2 focus:ring-blue-500 outline-none"
                   required
                 />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700">
+                  Your Message
+                </label>
                 <textarea
                   placeholder="Write your message..."
                   value={formData.message}
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full border border-gray-300 rounded-md p-3 resize-none h-28"
+                  className="w-full border border-gray-300 rounded-md p-3 mt-1 resize-none h-28 focus:ring-2 focus:ring-blue-500 outline-none"
                   required
                 />
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-                >
-                  Send Message
-                </button>
-              </form>
-            </motion.div>
-          </div>
-        )}
-      </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-medium shadow"
+              >
+                Send Message
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      )}
+
+      <Toaster />
     </div>
   );
 }

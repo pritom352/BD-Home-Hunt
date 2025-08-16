@@ -59,6 +59,12 @@ const DashboardLayout = () => {
                 >
                   <FaUser /> My Profile
                 </Link>
+                <Link
+                  to="/dashboard/overview"
+                  className={linkClasses("/dashboard/overview")}
+                >
+                  <FaUser /> overview
+                </Link>
                 {/* admin roll */}
                 {role === "admin" && (
                   <>
