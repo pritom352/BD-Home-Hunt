@@ -60,7 +60,7 @@ const PropertyCard = ({ property }) => {
       <div className="p-4 space-y-1 flex-1">
         {/* Price Range */}
         <motion.p
-          className="text-2xl font-bold text-green-600"
+          className="text-xl font-bold text-green-600"
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 300 }}

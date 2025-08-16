@@ -88,10 +88,6 @@ export default function TopAgent() {
                 <li>
                   <strong>📍 Location:</strong> Dhaka, Bangladesh
                 </li>
-                <li>
-                  <strong>🏢 Member Since:</strong>{" "}
-                  {new Date(agent.created_at).toLocaleDateString()}
-                </li>
               </ul>
               <button
                 onClick={() => setShowModal(true)}

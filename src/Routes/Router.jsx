@@ -22,6 +22,7 @@ import PropertyBought from "../Pages/PropertyBought/PropertyBought";
 import Loader from "../Pages/Loader/Loader";
 import MySoldProperties from "../Pages/MySoldProperties/MySoldProperties";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import ContactPage from "../Pages/ContactPage/ContactPage";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
             <PropertyDetails />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "contect",
+        element: <ContactPage></ContactPage>,
       },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
