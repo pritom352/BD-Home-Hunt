@@ -87,7 +87,7 @@ export default function TopAgent() {
 
             <button
               onClick={() => setShowModal(true)}
-              className="px-6 py-3 rounded-lg bg-blue-600  font-medium hover:bg-blue-700 transition w-fit shadow"
+              className="px-6 py-3 rounded-lg bg-primary  font-medium hover:bg-blue-700 transition w-fit shadow"
             >
               Contact Agent
             </button>
@@ -144,7 +144,7 @@ export default function TopAgent() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-medium shadow"
+                className="w-full bg-primary text-white py-3 rounded-lg hover:bg-blue-700 transition font-medium shadow"
               >
                 Send Message
               </button>

@@ -85,7 +85,7 @@ const MakeOfferPage = () => {
       .map((v) => +v.trim()) || [];
 
   return (
-    <div className="max-w-lg mx-auto mt-10 bg-white p-6 rounded shadow space-y-4">
+    <div className="max-w-lg mx-auto mt-10 bg-secondary p-6 rounded shadow space-y-4">
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center ">
         📝 Make an Offer
       </h1>
@@ -97,7 +97,7 @@ const MakeOfferPage = () => {
             type="text"
             readOnly
             value={property.title}
-            className="w-full border p-2 rounded bg-gray-100"
+            className="w-full border p-2 rounded bg-secondary"
           />
         </div>
 
@@ -107,7 +107,7 @@ const MakeOfferPage = () => {
             type="text"
             readOnly
             value={property.location}
-            className="w-full border p-2 rounded bg-gray-100"
+            className="w-full border p-2 rounded bg-secondary"
           />
         </div>
 
@@ -117,7 +117,7 @@ const MakeOfferPage = () => {
             type="text"
             readOnly
             value={property.agentName}
-            className="w-full border p-2 rounded bg-gray-100"
+            className="w-full border p-2 rounded bg-secondary"
           />
         </div>
 
@@ -143,7 +143,7 @@ const MakeOfferPage = () => {
             type="email"
             readOnly
             value={user?.email}
-            className="w-full border p-2 rounded bg-gray-100"
+            className="w-full border p-2 rounded bg-secondary"
           />
         </div>
 
@@ -153,7 +153,7 @@ const MakeOfferPage = () => {
             type="text"
             readOnly
             value={user?.displayName}
-            className="w-full border p-2 rounded bg-gray-100"
+            className="w-full border p-2 rounded bg-secondary"
           />
         </div>
 
@@ -173,7 +173,7 @@ const MakeOfferPage = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          className="w-full bg-primary text-white py-2 rounded hover:bg-blue-700"
         >
           Submit Offer
         </button>

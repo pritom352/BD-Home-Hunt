@@ -102,7 +102,7 @@ const Overview = () => {
     <section className="p-8 max-w-7xl mx-auto space-y-10">
       {/* Main Title & Subtitle */}
       <div className="text-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
+        <h1 className="text-3xl font-bold ">Dashboard Overview</h1>
         <p className="text-gray-500 mt-2">
           Summary of users, properties, and sales performance
         </p>
@@ -110,8 +110,8 @@ const Overview = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        <div className="bg-white shadow-lg rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
-          <FaUsers className="text-4xl text-secondary mb-2" />
+        <div className="bg-secondary shadow-lg rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
+          <FaUsers className="text-4xl text-primary mb-2" />
           <p className="text-2xl font-bold">{totalUsers}</p>
           <p className="text-gray-500 mt-1">Total Users</p>
           <p className="text-sm text-gray-400 mt-1">
@@ -119,8 +119,8 @@ const Overview = () => {
           </p>
         </div>
 
-        <div className="bg-white shadow-lg rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
-          <FaUserTie className="text-4xl text-secondary mb-2" />
+        <div className="bg-secondary shadow-lg rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
+          <FaUserTie className="text-4xl text-primary mb-2" />
           <p className="text-2xl font-bold">{totalAgents}</p>
           <p className="text-gray-500 mt-1">Total Agents</p>
           <p className="text-sm text-gray-400 mt-1">
@@ -128,8 +128,8 @@ const Overview = () => {
           </p>
         </div>
 
-        <div className="bg-white shadow-lg rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
-          <FaHome className="text-4xl text-secondary mb-2" />
+        <div className="bg-secondary shadow-lg rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
+          <FaHome className="text-4xl text-primary mb-2" />
           <p className="text-2xl font-bold">{totalProperties}</p>
           <p className="text-gray-500 mt-1">Total Properties</p>
           <p className="text-sm text-gray-400 mt-1">
@@ -137,8 +137,8 @@ const Overview = () => {
           </p>
         </div>
 
-        <div className="bg-white shadow-lg rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
-          <FaDollarSign className="text-4xl text-secondary mb-2" />
+        <div className="bg-secondary shadow-lg rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
+          <FaDollarSign className="text-4xl text-primary mb-2" />
           <p className="text-2xl font-bold">{soldProperties}</p>
           <p className="text-gray-500 mt-1">Sold Properties</p>
           <p className="text-sm text-gray-400 mt-1">
@@ -149,9 +149,9 @@ const Overview = () => {
 
       {/* Top Agent */}
       {topAgent && (
-        <div className="bg-white shadow-lg rounded-xl p-6 text-center hover:shadow-xl transition">
+        <div className="bg-secondary shadow-lg rounded-xl p-6 text-center hover:shadow-xl transition">
           <h3 className="text-xl font-semibold mb-2">Top Agent</h3>
-          <p className="text-lg font-bold">{topAgent.name}</p>
+          <p className="text-lg text-gray-500 font-bold">{topAgent.name}</p>
           <p className="text-gray-500">{topAgent.email}</p>
           <p className="text-gray-400 mt-1">
             Total Properties Managed: {topAgent.totalProperties}
@@ -162,7 +162,7 @@ const Overview = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Pie Chart - Verification Status */}
-        <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition">
+        <div className="bg-secondary shadow-lg rounded-xl p-6 hover:shadow-xl transition">
           <h3 className="text-xl font-semibold mb-2">Property Verification</h3>
           <p className="text-sm text-gray-400 mb-2">
             Distribution of properties by verification status.
@@ -190,7 +190,7 @@ const Overview = () => {
         </div>
 
         {/* Bar Chart - Properties per Agent */}
-        <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition">
+        <div className="bg-secondary shadow-lg rounded-xl p-6 hover:shadow-xl transition">
           <h3 className="text-xl font-semibold mb-2">Properties per Agent</h3>
           <p className="text-sm text-gray-400 mb-2">
             Number of properties each agent manages.
@@ -206,7 +206,7 @@ const Overview = () => {
         </div>
 
         {/* Line Chart - Users Growth */}
-        <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition">
+        <div className="bg-secondary shadow-lg rounded-xl p-6 hover:shadow-xl transition">
           <h3 className="text-xl font-semibold mb-2">User Growth</h3>
           <p className="text-sm text-gray-400 mb-2">
             Shows the trend of new user registrations.

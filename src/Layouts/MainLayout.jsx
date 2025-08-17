@@ -7,7 +7,7 @@ const MainLayout = () => {
   return (
     <div className=" bg-accent ">
       <Navbar></Navbar>
-      <div className=" max-w-10/11 md:max-w-9/11 lg:max-w-8/10 mx-auto min-h-[359px]">
+      <div className=" max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto">
         <Outlet></Outlet>
       </div>
 

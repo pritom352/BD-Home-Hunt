@@ -28,30 +28,30 @@ const MyProfile = () => {
 
       {/* Profile Details */}
       <div className="mt-20 sm:mt-24 text-center px-2">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-600">
           {user?.displayName || "Unknown User"}
         </h1>
         {user?.email && (
-          <p className="text-gray-600 text-sm sm:text-base mt-1">
+          <p className="text-gray-400 text-sm sm:text-base mt-1">
             {user.email}
           </p>
         )}
-        <span className="mt-2 inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow">
+        <span className="mt-2 inline-block bg-secondary text-blue-300 px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow">
           Role: {role || "Not Assigned"}
         </span>
       </div>
 
       {/* Extra Info Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 text-center">
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow hover:shadow-md transition">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
+        <div className="bg-secondary p-4 sm:p-6 rounded-xl shadow hover:shadow-md transition">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-500">
             Account Status
           </h3>
           <p className="text-gray-500 mt-2 text-sm sm:text-base">Active</p>
         </div>
 
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow hover:shadow-md transition">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
+        <div className="bg-secondary p-4 sm:p-6 rounded-xl shadow hover:shadow-md transition">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-500">
             Role
           </h3>
           <p className="text-gray-500 mt-2 text-sm sm:text-base">
@@ -59,8 +59,8 @@ const MyProfile = () => {
           </p>
         </div>
 
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow hover:shadow-md transition">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
+        <div className="bg-secondary p-4 sm:p-6 rounded-xl shadow hover:shadow-md transition">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-500">
             Joined On
           </h3>
           <p className="text-gray-500 mt-2 text-sm sm:text-base">

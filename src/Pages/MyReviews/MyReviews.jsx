@@ -57,16 +57,16 @@ const MyReviews = () => {
       {reviews.map((review) => (
         <div
           key={review._id}
-          className="bg-white shadow rounded p-4 flex flex-col gap-2"
+          className="bg-secondary shadow rounded p-4 flex flex-col gap-2"
         >
-          <h2 className="text-xl font-semibold text-blue-800">
+          <h2 className="text-xl font-semibold ">
             {review.propertyTitle || "Property Title Not Available"}
           </h2>
-          <p className="text-gray-700"> Agent: {review.agentName || "N/A"}</p>
+          <p className="text-gray-500"> Agent: {review.agentName || "N/A"}</p>
           <p className="text-sm text-gray-500">
             🕒 {new Date(review.createdAt).toLocaleString()}
           </p>
-          <p className="text-gray-800 break-words">{review.comment}</p>
+          <p className="text-gray-500 break-words">{review.comment}</p>
           <button
             onClick={() => handleDelete(review._id)}
             className="self-end mt-2 px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
