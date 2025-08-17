@@ -65,8 +65,8 @@ const ManageUsers = () => {
       </h2>
 
       <div className="overflow-x-auto shadow rounded-lg">
-        <table className="w-full text-sm text-left text-gray-600">
-          <thead className="text-xs uppercase bg-secondary text-gray-700">
+        <table className="w-full text-sm text-left ">
+          <thead className="text-xs uppercase bg-secondary ">
             <tr>
               <th className="px-6 py-3">Name</th>
               <th className="px-6 py-3">Email</th>
@@ -77,7 +77,7 @@ const ManageUsers = () => {
             {users.map((u) => (
               <tr
                 key={u._id}
-                className="bg-secondary border-b hover:bg-gray-50 transition"
+                className="bg-secondary border-b hover:bg-accent transition"
               >
                 <td className="px-6 py-4">{u.name}</td>
                 <td className="px-6 py-4">{u.email}</td>
@@ -93,7 +93,7 @@ const ManageUsers = () => {
                           onClick={() =>
                             roleMutation.mutate({ id: u._id, role: "admin" })
                           }
-                          className="px-3 py-1 text-xs bg-green-500 hover:bg-green-600 text-white rounded shadow"
+                          className="px-3 py-1 text-xs bg-primary  text-white rounded shadow"
                         >
                           Make Admin
                         </button>

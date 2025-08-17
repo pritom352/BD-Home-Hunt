@@ -44,7 +44,7 @@ export default function TopAgent() {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="w-full max-w-6xl bg-secondary rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2"
+          className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto bg-secondary rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2"
         >
           {/* Left - Agent Image */}
           <div className="relative h-[400px] md:h-auto">

@@ -7,6 +7,7 @@ import TopAgent from "../../Components/TopAgent";
 import HowItWorks from "../../Components/HowItWorks";
 import WhyChooseUs from "../../Components/WhyChooseUs";
 import FAQ from "../../Components/FAQ";
+import OurPartners from "../../Components/OurPartners";
 
 const Home = () => {
   const properties = useLoaderData();
@@ -15,9 +16,10 @@ const Home = () => {
       <Banner></Banner>
       <AdvertisementSection properties={properties}></AdvertisementSection>
       <TopAgent></TopAgent>
-      {/* <HowItWorks></HowItWorks> */}
+      <HowItWorks></HowItWorks>
       <FAQ></FAQ>
       <WhyChooseUs></WhyChooseUs>
+      {/* <OurPartners></OurPartners> */}
       <LatestReviews></LatestReviews>
     </div>
   );

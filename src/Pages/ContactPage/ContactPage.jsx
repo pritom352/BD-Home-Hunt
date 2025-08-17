@@ -2,10 +2,10 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default function ContactPage() {
   return (
-    <div className="w-full mt-20">
+    <div className="w-full ">
       {/* Banner */}
       <div
-        className="relative w-full h-[250px] sm:h-[300px] md:h-[400px] flex items-center justify-center text-center text-white"
+        className="relative w-full h-[250px] sm:h-[300px] md:h-[450px] flex items-center justify-center text-center text-white"
         style={{
           backgroundImage: `url('https://www.benhams.com/news/wp-content/uploads/2024/08/Dream-work.jpg')`,
           backgroundSize: "cover",
@@ -25,7 +25,7 @@ export default function ContactPage() {
       </div>
 
       {/* Contact Section */}
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8  mt-20">
+      <div className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto grid md:grid-cols-2 gap-8  mt-20">
         {/* Left: Form */}
         <div>
           <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
@@ -91,7 +91,7 @@ export default function ContactPage() {
       </div>
 
       {/* Map */}
-      <div className="w-full h-64 sm:h-72 md:h-96 rounded-2xl overflow-hidden shadow-lg my-20">
+      <div className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto h-64 sm:h-72 md:h-96 rounded-2xl overflow-hidden shadow-lg my-20">
         <iframe
           src="https://maps.google.com/maps?q=24.792221602473735,88.94310960862755&z=15&output=embed"
           width="100%"

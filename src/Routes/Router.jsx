@@ -42,7 +42,11 @@ const router = createBrowserRouter([
       },
       {
         path: "allPropertie",
-        element: <AllProperties />,
+        element: (
+          <PrivateRoute>
+            <AllProperties></AllProperties>
+          </PrivateRoute>
+        ),
       },
       {
         path: "property/:id",

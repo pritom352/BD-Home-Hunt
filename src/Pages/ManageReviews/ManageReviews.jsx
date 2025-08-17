@@ -53,7 +53,7 @@ const ManageReviews = () => {
               </div>
             </div>
 
-            <p className="text-gray-700 text-sm sm:text-base line-clamp-4 overflow-scroll">
+            <p className="text-gray-500 text-sm sm:text-base line-clamp-4 overflow-scroll">
               {r.comment}
             </p>
 

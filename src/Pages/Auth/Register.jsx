@@ -107,7 +107,7 @@ const Register = () => {
       {/* Right Side */}
       <div className="card w-full max-w-sm shrink-0 shadow-2xl mx-auto mt-20  h-fit">
         <h2 className="text-3xl font-bold mx-auto mt-3  text-shadow-lg">
-          Register <span className="text-black">Now</span>
+          Register Now
         </h2>
         <div className="card-body">
           <form onSubmit={handleRegister} className="fieldset">
@@ -116,7 +116,7 @@ const Register = () => {
               type="text"
               required
               name="name"
-              className="input border-0 border-b-2 rounded-b-none focus:rounded focus:border-2 focus:border-blue-500 text-black font-semibold focus:bg-blue-300 focus:text-white w-full"
+              className="input border-0 border-b-2 rounded-b-none focus:rounded focus:border-2 focus:border-blue-500  font-semibold  w-full"
               placeholder="Name"
             />
 
@@ -125,7 +125,7 @@ const Register = () => {
               type="email"
               required
               name="email"
-              className="input border-0 border-b-2 rounded-b-none focus:rounded focus:border-2 focus:border-blue-500 text-black font-semibold focus:bg-blue-300 focus:text-white w-full"
+              className="input border-0 border-b-2 rounded-b-none focus:rounded focus:border-2 focus:border-blue-500  font-semibold  w-full"
               placeholder="Email"
             />
 
@@ -135,7 +135,7 @@ const Register = () => {
               autoComplete="off"
               required
               name="photoURL"
-              className="input border-0 border-b-2 rounded-b-none focus:rounded focus:border-2 focus:border-blue-500 text-black font-semibold focus:bg-blue-300 focus:text-white w-full"
+              className="input border-0 border-b-2 rounded-b-none focus:rounded focus:border-2 focus:border-blue-500  font-semibold   w-full"
               placeholder="Photo URL"
             />
 
@@ -146,7 +146,7 @@ const Register = () => {
                 name="currentPassword"
                 autoComplete="new-password"
                 required
-                className="input border-0 border-b-2 rounded-b-none focus:rounded focus:border-2 focus:border-blue-500 text-black font-semibold focus:bg-blue-300 focus:text-white w-full"
+                className="input border-0 border-b-2 rounded-b-none focus:rounded focus:border-2 focus:border-blue-500 text-black font-semibold  w-full"
                 placeholder="Password"
               />
             </div>

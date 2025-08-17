@@ -41,7 +41,7 @@ export default function FAQ() {
         Frequently Asked Questions
       </motion.h2>
 
-      <div className="max-w-4xl mx-auto  space-y-4">
+      <div className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto  space-y-4">
         {faqs.map((faq, idx) => (
           <motion.div
             key={idx}

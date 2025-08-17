@@ -73,7 +73,7 @@ const MyAddedProperties = () => {
               {property.title}
             </h3>
 
-            <div className="flex-1 flex flex-col justify-center gap-1 text-sm text-gray-700">
+            <div className="flex-1 flex flex-col justify-center gap-1 text-sm text-gray-500">
               <p>{property.location}</p>
 
               <div className="flex items-center gap-2">
@@ -91,7 +91,7 @@ const MyAddedProperties = () => {
               <span
                 className={`px-2 py-1 rounded text-xs self-start ${
                   property.verificationStatus === "verified"
-                    ? "bg-green-100 text-green-700"
+                    ? "bg-green-100 text-green-500"
                     : property.verificationStatus === "rejected"
                     ? "bg-red-100 text-red-700"
                     : "bg-yellow-100 text-yellow-700"

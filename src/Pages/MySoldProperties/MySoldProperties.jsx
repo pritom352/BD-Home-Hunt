@@ -19,10 +19,13 @@ const MySoldProperties = () => {
   if (isLoading) return <p>Loading...</p>;
   return (
     <div className="p-4">
-      <h2 className="text-xl font-semibold mb-4">My Sold Properties</h2>
+      <h2 className="text-2xl font-bold text-gray-900 text-center">
+        My Sold Properties
+      </h2>
+
       <div className="overflow-x-auto">
         <table className="table-auto w-full border">
-          <thead className="bg-gray-200 text-left">
+          <thead className="bg-secondary text-left">
             <tr>
               <th className="p-2">#</th>
               <th className="p-2">Title</th>
