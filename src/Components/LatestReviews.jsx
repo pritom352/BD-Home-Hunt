@@ -43,7 +43,7 @@ const LatestReviews = () => {
           >
             {/* Comment */}
             <div className="p-6">
-              <p className="text-gray-700 italic text-center text-base sm:text-lg">
+              <p className="text-gray-500 italic text-center text-base sm:text-lg">
                 “{review.comment}”
               </p>
             </div>

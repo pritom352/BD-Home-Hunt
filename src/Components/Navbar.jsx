@@ -49,6 +49,12 @@ const Navbar = () => {
         </NavLink>
       )}
 
+      <NavLink to={"/about"}>
+        <p className="group cursor-pointer relative">
+          About
+          <span className=" absolute bg-blue-500 h-[2px] group-hover:w-full left-0 w-0 -bottom-1 duration-200"></span>
+        </p>
+      </NavLink>
       <NavLink to={"/contect"}>
         <p className="group cursor-pointer relative">
           contect

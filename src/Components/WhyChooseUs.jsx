@@ -19,7 +19,7 @@ export default function WhyChooseUs() {
 
       {/* Card Section */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="bg-white shadow-lg rounded-2xl -mt-16 p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+        <div className="bg-secondary shadow-lg rounded-2xl -mt-16 p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-200">
           {/* Part 1 */}
           <div className="flex flex-col items-center justify-center p-6 min-h-[220px]">
             <Home className="w-12 h-12 text-blue-500 mb-4" />

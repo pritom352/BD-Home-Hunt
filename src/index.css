@@ -9,7 +9,7 @@
   name: "light";
   default: true;
   --color-primary: #ffa979;
-  --color-secondary: #a7d6d1;
+  --color-secondary: #f4f4f6;
   --color-accent: #e1f4f3;
 }
 @plugin "daisyui/theme" {
@@ -17,6 +17,6 @@
   default: true;
   --color-primary: #515195;
   /* --color-primary: #454948; */
-  --color-secondary: #6c8ea4;
-  --color-accent: #303d3c;
+  --color-secondary: #23232d;
+  --color-accent: #2c2c2c;
 }

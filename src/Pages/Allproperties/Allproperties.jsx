@@ -77,7 +77,7 @@ const AllProperties = () => {
       </div>
 
       {filteredProperties?.length === 0 ? (
-        <p className="text-center text-gray-500">
+        <p className="text-center ">
           No verified properties found for this location.
         </p>
       ) : (
@@ -101,7 +101,7 @@ const AllProperties = () => {
                 <h3 className="text-xl font-semibold">
                   Title: {property.title}
                 </h3>
-                <p className="text-gray-600">
+                <p>
                   <span className="font-bold">Location: </span>
                   {property.location}
                 </p>
@@ -115,9 +115,7 @@ const AllProperties = () => {
                     alt={property.agentName}
                     className="w-8 h-8 rounded-full border"
                   />
-                  <span className="text-sm text-gray-700">
-                    {property.agentName}
-                  </span>
+                  <span className="text-sm ">{property.agentName}</span>
                 </div>
 
                 <div className="flex justify-start">
@@ -126,13 +124,11 @@ const AllProperties = () => {
                   </span>
                 </div>
 
-                <p className="text-gray-700 font-medium">
-                  Price: {property.priceRange}
-                </p>
+                <p className=" font-medium">Price: {property.priceRange}</p>
 
                 <button
                   onClick={() => navigate(`/property/${property._id}`)}
-                  className="mt-auto bg-primary text-white px-3 py-2 rounded hover:bg-blue-700 transition"
+                  className="mt-auto bg-primary  px-3 py-2 rounded hover:bg-blue-700 transition"
                 >
                   View Details
                 </button>

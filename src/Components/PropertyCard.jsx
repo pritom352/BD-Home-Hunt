@@ -70,7 +70,7 @@ const PropertyCard = ({ property }) => {
 
         {/* Title */}
         <motion.h2
-          className="text-xl font-semibold text-gray-800"
+          className="text-xl font-semibold "
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           whileHover={{ scale: 1.05 }}
@@ -81,7 +81,7 @@ const PropertyCard = ({ property }) => {
 
         {/* Location */}
         <motion.p
-          className="text-sm text-gray-500 flex items-center gap-2"
+          className="text-sm  flex items-center gap-2"
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           whileHover={{ scale: 1.02 }}

@@ -34,17 +34,17 @@ export default function TopAgent() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="mt-20 mb-20">
+    <div className="mt-20 mb-20 ">
       <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-12">
         🌟 Top Agent of the Month
       </h1>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center ">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="w-full max-w-6xl bg-white rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2"
+          className="w-full max-w-6xl bg-secondary rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2"
         >
           {/* Left - Agent Image */}
           <div className="relative h-[400px] md:h-auto">
@@ -53,7 +53,7 @@ export default function TopAgent() {
               alt={agent.name}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6 text-white">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6 ">
               <h2 className="text-2xl font-bold">{agent.name}</h2>
               <p className="text-sm">{agent.email}</p>
             </div>
@@ -62,17 +62,15 @@ export default function TopAgent() {
           {/* Right - Agent Info */}
           <div className="flex flex-col justify-center p-8 space-y-6">
             <div>
-              <h3 className="text-2xl font-bold text-gray-800">
-                Meet {agent.name}
-              </h3>
-              <p className="text-gray-600 mt-2 text-base leading-relaxed">
+              <h3 className="text-2xl font-bold ">Meet {agent.name}</h3>
+              <p className=" mt-2 text-base leading-relaxed text-gray-500">
                 Discover the top-rated agent of the month. This agent has earned
                 the trust of many clients through dedication, quick responses,
                 and excellent service.
               </p>
             </div>
 
-            <ul className="space-y-2 text-gray-700 text-base">
+            <ul className="space-y-2 text-gray-500 text-base">
               <li>
                 <strong>📧 Email:</strong> {agent.email}
               </li>
@@ -89,7 +87,7 @@ export default function TopAgent() {
 
             <button
               onClick={() => setShowModal(true)}
-              className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition w-fit shadow"
+              className="px-6 py-3 rounded-lg bg-blue-600  font-medium hover:bg-blue-700 transition w-fit shadow"
             >
               Contact Agent
             </button>

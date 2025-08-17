@@ -24,6 +24,7 @@ import MySoldProperties from "../Pages/MySoldProperties/MySoldProperties";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import ContactPage from "../Pages/ContactPage/ContactPage";
 import Overview from "../Pages/Overview/Overview";
+import About from "../hooks/About/About";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "contect",
         element: <ContactPage></ContactPage>,
+      },
+      {
+        path: "about",
+        element: <About></About>,
       },
 
       { path: "login", element: <Login /> },
