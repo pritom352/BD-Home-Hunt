@@ -18,8 +18,8 @@ const MySoldProperties = () => {
 
   if (isLoading) return <p>Loading...</p>;
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold text-gray-900 text-center">
+    <div className="my-25">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl text-center mb-15 font-bold">
         My Sold Properties
       </h2>
 

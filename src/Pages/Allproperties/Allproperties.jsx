@@ -50,8 +50,8 @@ const AllProperties = () => {
   }
 
   return (
-    <section className="mx-auto my-25">
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-10 text-center ">
+    <section className=" max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto my-25">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center ">
         All Listed Properties
       </h2>
 

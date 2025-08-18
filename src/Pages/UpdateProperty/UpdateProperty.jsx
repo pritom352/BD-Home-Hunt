@@ -40,7 +40,6 @@ const UpdateProperty = () => {
     description: "",
   });
 
-  // property আসলে formData তে সেট করো
   useEffect(() => {
     if (property) {
       setFormData({
@@ -62,7 +61,7 @@ const UpdateProperty = () => {
   });
 
   if (isLoading) return <Loader></Loader>;
-  // toast.error("error loading property");
+
   if (isError) return <div>Error loading property</div>;
 
   const handleChange = (e) => {
@@ -84,7 +83,7 @@ const UpdateProperty = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto mt-25">
+    <div className="max-w-6xl mx-auto my-25">
       <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
         Update Property
       </h2>

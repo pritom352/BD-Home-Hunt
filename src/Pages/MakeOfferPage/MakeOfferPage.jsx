@@ -85,9 +85,9 @@ const MakeOfferPage = () => {
       .map((v) => +v.trim()) || [];
 
   return (
-    <div className="max-w-lg mx-auto mt-10 bg-secondary p-6 rounded shadow space-y-4">
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center ">
-        📝 Make an Offer
+    <div className="max-w-lg mx-auto my-25 bg-secondary p-6 rounded shadow space-y-4">
+      <h1 className="text-2xl md:text-3xl lg:text-4xl text-center mb-15 font-bold ">
+        Make an Offer
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">

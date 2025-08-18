@@ -34,9 +34,9 @@ export default function TopAgent() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="mt-20 mb-20 ">
-      <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-12">
-        🌟 Top Agent of the Month
+    <div className="mt-25mb-25 ">
+      <h1 className="text-2xl md:text-3xl lg:text-4xl text-center mb-15 font-bold">
+        Top Agent of the Month
       </h1>
 
       <div className="flex justify-center ">

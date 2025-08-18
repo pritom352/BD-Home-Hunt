@@ -99,9 +99,9 @@ const Overview = () => {
   }, []);
 
   return (
-    <section className="p-8 max-w-7xl mx-auto space-y-10">
+    <section className="my-25  max-w-7xl mx-auto space-y-10">
       {/* Main Title & Subtitle */}
-      <div className="text-center mb-6">
+      <div className="text-center mb-15">
         <h1 className="text-3xl font-bold ">Dashboard Overview</h1>
         <p className="text-gray-500 mt-2">
           Summary of users, properties, and sales performance

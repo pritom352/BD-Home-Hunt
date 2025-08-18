@@ -14,10 +14,13 @@ import Loader from "../Pages/Loader/Loader";
 import { AuthContext } from "../context/AuthContext";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import Swal from "sweetalert2";
 
 const DashboardLayout = () => {
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const { logout, user, theme, setTheme } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const [role, isRoleLoading] = useRole();
 
   if (isRoleLoading) return <Loader />;
@@ -30,6 +33,27 @@ const DashboardLayout = () => {
         ? "bg-blue-500 text-white"
         : "hover:bg-gray-200 text-gray-700"
     }`;
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Logout successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: `${error.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
 
   return (
     <div>
@@ -147,7 +171,10 @@ const DashboardLayout = () => {
             </div>
 
             <div className="flex flex-col gap-2 pt-4 border-t mt-4">
-              <button className="flex items-center gap-2 p-2 rounded hover:bg-red-100 text-red-600">
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 p-2 rounded hover:bg-red-100 text-red-600"
+              >
                 <FaSignOutAlt /> Logout
               </button>
             </div>

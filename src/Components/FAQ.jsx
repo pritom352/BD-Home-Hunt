@@ -31,9 +31,9 @@ export default function FAQ() {
   ];
 
   return (
-    <section className="mt-20 ">
+    <section className="mt-25 ">
       <motion.h2
-        className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 "
+        className="text-2xl md:text-3xl lg:text-4xl text-center mb-15 font-bold "
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}

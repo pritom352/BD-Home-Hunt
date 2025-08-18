@@ -48,7 +48,7 @@ const MyAddedProperties = () => {
   if (isError) return <div className="text-center py-10">Failed to fetch.</div>;
 
   return (
-    <section className="max-w-6xl mx-auto mt-25 ">
+    <section className="max-w-6xl mx-auto my-25 ">
       <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
         My Added Properties
       </h2>

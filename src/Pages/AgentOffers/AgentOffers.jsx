@@ -49,7 +49,7 @@ const AgentOffers = () => {
   return (
     <div className="max-w-6xl mx-auto my-25">
       <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
-        📋 My Property Offers
+        My Property Offers
       </h2>
       <div className="overflow-x-auto">
         <table className="table-auto w-full border">

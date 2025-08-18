@@ -47,7 +47,7 @@ const MyReviews = () => {
   return (
     <div className="max-w-6xl mx-auto mt-25  space-y-4">
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-15 text-center">
-        📝 My Reviews
+        My Reviews
       </h1>
 
       {reviews.length === 0 && (

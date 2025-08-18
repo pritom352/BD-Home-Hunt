@@ -28,10 +28,10 @@ const LatestReviews = () => {
     );
 
   return (
-    <section className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto">
+    <section className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 my-25 mx-auto">
       {/* Title */}
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-10 text-center">
-        🌟 Latest User Reviews
+      <h2 className="text-2xl md:text-3xl lg:text-4xl text-center mb-15 font-bold">
+        Latest User Reviews
       </h2>
 
       {/* Grid */}

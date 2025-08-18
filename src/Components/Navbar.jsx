@@ -83,8 +83,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className=" border border-red-500 bg-primary sticky top-0 z-50 ">
-      <div className="navbar  shadow-sm   border max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto">
+    <div className="  bg-primary sticky top-0 z-50 ">
+      <div className="navbar     max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -112,7 +112,7 @@ const Navbar = () => {
             </ul>
           </div>
           <img
-            className="  w-[40px] h-[40px] rounded-2xl border "
+            className="  w-[40px] h-[40px] rounded-2xl  "
             src={logo}
             alt=""
           />
@@ -150,7 +150,7 @@ const Navbar = () => {
           {user ? (
             <>
               <img
-                className=" w-[40px] h-[40px] border  rounded-full mr-2"
+                className=" w-[40px] h-[40px]   rounded-full mr-2"
                 src={user?.photoURL}
                 alt=""
               />

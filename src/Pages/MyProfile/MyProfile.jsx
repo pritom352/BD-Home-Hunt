@@ -7,7 +7,7 @@ const MyProfile = () => {
   const [role] = useRole();
 
   return (
-    <div className="max-w-6xl mx-auto mt-6 px-4">
+    <div className="max-w-6xl mx-auto my-25 px-4">
       {/* Banner */}
       <div className="relative">
         <img

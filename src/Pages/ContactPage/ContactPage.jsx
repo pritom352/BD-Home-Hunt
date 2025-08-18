@@ -25,10 +25,10 @@ export default function ContactPage() {
       </div>
 
       {/* Contact Section */}
-      <div className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto grid md:grid-cols-2 gap-8  mt-20">
+      <div className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto grid md:grid-cols-2 gap-8  mt-25">
         {/* Left: Form */}
         <div>
-          <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
+          <h2 className="text-2xl font-bold mb-10">Send Us a Message</h2>
           <form className="space-y-4">
             <input
               type="text"
@@ -91,7 +91,7 @@ export default function ContactPage() {
       </div>
 
       {/* Map */}
-      <div className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto h-64 sm:h-72 md:h-96 rounded-2xl overflow-hidden shadow-lg my-20">
+      <div className="max-w-14/15 md:max-w-10/11 lg:max-w-9/10 mx-auto h-64 sm:h-72 md:h-96 rounded-2xl overflow-hidden shadow-lg my-25">
         <iframe
           src="https://maps.google.com/maps?q=24.792221602473735,88.94310960862755&z=15&output=embed"
           width="100%"

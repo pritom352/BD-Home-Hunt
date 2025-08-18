@@ -30,7 +30,7 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section
-      className="w-full relative py-16 md:py-20 lg:py-24 bg-fixed bg-center bg-cover"
+      className="w-full relative mt-25 pb-25 bg-fixed bg-center bg-cover"
       style={{
         backgroundImage:
           "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80')",
@@ -43,12 +43,12 @@ export default function HowItWorks() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <motion.h2
-          className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-center mb-12 md:mb-16 text-white drop-shadow-lg"
+          className="text-2xl md:text-3xl lg:text-4xl text-center mb-15 font-bold pt-25 text-white drop-shadow-lg"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          🛠️ How It Works
+          How It Works
         </motion.h2>
 
         {/* Steps */}

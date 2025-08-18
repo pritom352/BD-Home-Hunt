@@ -2,7 +2,7 @@ import { Home, Users, CreditCard, Headphones } from "lucide-react";
 
 export default function WhyChooseUs() {
   return (
-    <div className="relative mt-20">
+    <div className="relative mt-25">
       {/* Banner */}
       <div
         className="w-full h-[270px] md:h-[320px] lg:h-[370px] bg-cover bg-center flex flex-col justify-center items-center text-white px-4 text-center"

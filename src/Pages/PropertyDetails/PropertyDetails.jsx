@@ -109,7 +109,7 @@ const PropertyDetails = () => {
   return (
     <div className="max-w-6xl mx-auto  my-25">
       <h1 className="text-4xl font-bold text-center text-gray-800 mb-15">
-        🏡 Property Details
+        Property Details
       </h1>
 
       {/* Property Display */}
