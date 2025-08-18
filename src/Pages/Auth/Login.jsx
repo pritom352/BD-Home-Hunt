@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthContext";
@@ -11,6 +11,10 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { login, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  // input refs
+  const emailRef = useRef(null);
+  const passRef = useRef(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -79,10 +83,20 @@ const Login = () => {
     }
   };
 
+  // Quick Fill Function
+  const fillCredentials = (role) => {
+    if (role === "agent") {
+      emailRef.current.value = "agent@gmail.com";
+      passRef.current.value = "123456Aa";
+    } else if (role === "admin") {
+      emailRef.current.value = "admin@gmail.com";
+      passRef.current.value = "123456Aa";
+    }
+  };
+
   return (
     <div className="min-h-screen flex">
       {/* Left Side */}
-
       <div className=" hidden md:block ">
         <Lottie
           animationData={loginAnimetion}
@@ -97,12 +111,32 @@ const Login = () => {
           <h2 className="text-2xl font-bold text-center mb-6">
             Login to your account
           </h2>
+
+          {/* Quick Fill Buttons */}
+          <div className="flex gap-3 mb-4 justify-center">
+            <button
+              type="button"
+              onClick={() => fillCredentials("agent")}
+              className="bg-primary text-white px-3 py-1 rounded hover:bg-blue-600 text-sm"
+            >
+              Fill Agent
+            </button>
+            <button
+              type="button"
+              onClick={() => fillCredentials("admin")}
+              className="bg-primary text-white px-3 py-1 rounded hover:bg-green-600 text-sm"
+            >
+              Fill Admin
+            </button>
+          </div>
+
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block mb-1 font-medium">Email</label>
               <input
                 type="email"
                 name="email"
+                ref={emailRef}
                 placeholder="Enter your email"
                 className="w-full px-4 py-2 border rounded"
                 required
@@ -118,6 +152,7 @@ const Login = () => {
                   className="w-full px-4 py-2 border rounded pr-10"
                   required
                   name="password"
+                  ref={passRef}
                 />
                 <span
                   onClick={() => setShowPassword(!showPassword)}
