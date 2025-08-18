@@ -109,7 +109,7 @@ const Overview = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-secondary shadow-lg rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
           <FaUsers className="text-4xl text-primary mb-2" />
           <p className="text-2xl font-bold">{totalUsers}</p>

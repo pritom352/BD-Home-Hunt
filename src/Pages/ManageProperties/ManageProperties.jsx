@@ -82,7 +82,7 @@ const ManageProperties = () => {
                           status: "verified",
                         })
                       }
-                      className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700"
+                      className="bg-primary text-white px-2 py-1 rounded hover:bg-blue-700"
                       disabled={mutation.isLoading}
                     >
                       Verify

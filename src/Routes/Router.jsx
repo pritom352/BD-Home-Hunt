@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import Home from "../Pages/Home/Home";
 import MainLayout from "../Layouts/MainLayout";
 import Login from "../Pages/Auth/Login";
@@ -25,13 +25,14 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import ContactPage from "../Pages/ContactPage/ContactPage";
 import Overview from "../Pages/Overview/Overview";
 import About from "../hooks/About/About";
+import NotFound from "../Pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     hydrateFallbackElement: <Loader></Loader>,
-    errorElement: <ErrorPage></ErrorPage>,
+    errorElement: <NotFound></NotFound>,
     children: [
       {
         index: true,
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: "allPropertie",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <AllProperties></AllProperties>
@@ -50,6 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path: "property/:id",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <PropertyDetails />
@@ -58,6 +61,7 @@ const router = createBrowserRouter([
       },
       {
         path: "contect",
+
         element: <ContactPage></ContactPage>,
       },
       {
@@ -71,15 +75,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
+    errorElement: <NotFound></NotFound>,
     element: (
       <PrivateRoute>
         <DashboardLayout />
       </PrivateRoute>
     ),
-    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
+        index: true, // default route
+        element: <Navigate to="myProfile" replace />,
+      },
+      {
         path: "addProperty",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <AddProperty></AddProperty>
@@ -88,6 +97,7 @@ const router = createBrowserRouter([
       },
       {
         path: "overview",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <Overview></Overview>
@@ -96,6 +106,7 @@ const router = createBrowserRouter([
       },
       {
         path: "myProfile",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <MyProfile></MyProfile>
@@ -104,6 +115,7 @@ const router = createBrowserRouter([
       },
       {
         path: "wishList",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <WishlistPage></WishlistPage>
@@ -112,6 +124,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/propertyBought",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <PropertyBought></PropertyBought>
@@ -120,6 +133,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/makeOffer/:id",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <MakeOfferPage></MakeOfferPage>
@@ -128,6 +142,7 @@ const router = createBrowserRouter([
       },
       {
         path: "myReviews",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <MyReviews></MyReviews>
@@ -136,6 +151,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/update-property/:id",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <UpdateProperty></UpdateProperty>
@@ -144,6 +160,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/manageUsers",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <ManageUsers></ManageUsers>
@@ -152,6 +169,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/agentOffers",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <AgentOffers></AgentOffers>
@@ -161,6 +179,7 @@ const router = createBrowserRouter([
 
       {
         path: "/dashboard/mahageReviews",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <ManageReviews></ManageReviews>
@@ -170,6 +189,7 @@ const router = createBrowserRouter([
 
       {
         path: "my-properties",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <MyAddedProperties />
@@ -178,6 +198,7 @@ const router = createBrowserRouter([
       },
       {
         path: "mySoldProperties",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <MySoldProperties></MySoldProperties>
@@ -187,6 +208,7 @@ const router = createBrowserRouter([
 
       {
         path: "manage-properties",
+        errorElement: <NotFound></NotFound>,
         element: (
           <PrivateRoute>
             <ManageProperties />

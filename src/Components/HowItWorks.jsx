@@ -40,7 +40,7 @@ export default function HowItWorks() {
       <div className="absolute inset-0 bg-black/70" />
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-14/15 md:max-w-10/11 lg:max-w-9/10  mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <motion.h2
           className="text-2xl md:text-3xl lg:text-4xl text-center mb-15 font-bold pt-25 text-white drop-shadow-lg"

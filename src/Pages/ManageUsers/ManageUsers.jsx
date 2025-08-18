@@ -101,14 +101,14 @@ const ManageUsers = () => {
                           onClick={() =>
                             roleMutation.mutate({ id: u._id, role: "agent" })
                           }
-                          className="px-3 py-1 text-xs bg-blue-500 hover:bg-blue-600 text-white rounded shadow"
+                          className="px-3 py-1 text-xs bg-primary text-white rounded shadow"
                         >
                           Make Agent
                         </button>
                         {u.role === "agent" && (
                           <button
                             onClick={() => fraudMutation.mutate(u._id)}
-                            className="px-3 py-1 text-xs bg-yellow-500 hover:bg-yellow-600 text-white rounded shadow"
+                            className="px-3 py-1 text-xs bg-primary text-white rounded shadow"
                           >
                             Mark as Fraud
                           </button>

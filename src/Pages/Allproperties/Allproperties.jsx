@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Loader from "../Loader/Loader";
+import NotFound from "../NotFound/NotFound";
 
 const AllProperties = () => {
   const [searchLocation, setSearchLocation] = useState("");
@@ -26,11 +27,7 @@ const AllProperties = () => {
 
   if (isLoading) return <Loader />;
   if (isError) {
-    return (
-      <div className="text-center py-10 text-red-500">
-        Error: {error.message || "Something went wrong"}
-      </div>
-    );
+    return <NotFound></NotFound>;
   }
 
   // Filter by location
